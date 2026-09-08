@@ -20,6 +20,11 @@ const AppContent: React.FC = () => {
   const isDark = theme === 'dark';
   const [searchOpen, setSearchOpen] = useState(false);
 
+  // Direct return for Google Search Console verification if ever routed client-side
+  if (currentPath === '/google63909bce1f342ce4.html') {
+    return <>google-site-verification: google63909bce1f342ce4.html</>;
+  }
+
   // Route Dispatcher
   const renderRoute = () => {
     // 1. Home
