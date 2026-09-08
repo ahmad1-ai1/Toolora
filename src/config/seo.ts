@@ -1,6 +1,6 @@
 /**
  * Global SEO Configuration for Toolora
- * https://toolora.workers.dev
+ * https://tooloraa.muhammadahmad60713.workers.dev
  */
 
 const getEnvSiteUrl = (): string | undefined => {
@@ -18,7 +18,7 @@ const getEnvSiteUrl = (): string | undefined => {
   return undefined;
 };
 
-export const SITE_URL = getEnvSiteUrl() || 'https://toolora.workers.dev';
+export const SITE_URL = getEnvSiteUrl() || 'https://tooloraa.muhammadahmad60713.workers.dev';
 export const SITE_NAME = 'Toolora';
 export const DEFAULT_TITLE = 'Toolora — Free Online Tools for Images, PDFs, Text & More';
 export const DEFAULT_DESCRIPTION =

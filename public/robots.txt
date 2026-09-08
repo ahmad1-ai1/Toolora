@@ -3,4 +3,4 @@ Allow: /
 Allow: /tools/
 Allow: /tools/*
 
-Sitemap: https://toolora.workers.dev/sitemap.xml
+Sitemap: https://tooloraa.muhammadahmad60713.workers.dev/sitemap.xml
