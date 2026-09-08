@@ -4,6 +4,75 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- Environment compatibility fix for getter-only window.fetch -->
+    <script>
+      (function() {
+        try {
+          function ensureWritableFetch(target) {
+            if (!target) return;
+            try {
+              var desc = Object.getOwnPropertyDescriptor(target, 'fetch');
+              if (desc && desc.get && !desc.set) {
+                var currentVal;
+                try { currentVal = desc.get.call(target); } catch (_) { currentVal = target.fetch; }
+                Object.defineProperty(target, 'fetch', {
+                  get: function() { return currentVal; },
+                  set: function(val) { currentVal = val; },
+                  configurable: true,
+                  enumerable: true
+                });
+              }
+            } catch (_) {}
+          }
+
+          ensureWritableFetch(window);
+          if (typeof Window !== 'undefined' && Window.prototype) {
+            ensureWritableFetch(Window.prototype);
+          }
+
+          try {
+            var winDesc = Object.getOwnPropertyDescriptor(window, 'fetch');
+            if (!winDesc || (winDesc.get && !winDesc.set)) {
+              var initialFetch = window.fetch;
+              Object.defineProperty(window, 'fetch', {
+                get: function() { return initialFetch; },
+                set: function(val) { initialFetch = val; },
+                configurable: true,
+                enumerable: true
+              });
+            }
+          } catch (_) {}
+
+          var origDefineProperty = Object.defineProperty;
+          Object.defineProperty = function(obj, prop, descriptor) {
+            try {
+              if ((obj === window || (typeof Window !== 'undefined' && obj === Window.prototype)) &&
+                  prop === 'fetch' && descriptor && descriptor.get && !descriptor.set) {
+                var getFn = descriptor.get;
+                var currentFn;
+                descriptor.get = function() {
+                  return currentFn !== undefined ? currentFn : getFn.call(this);
+                };
+                descriptor.set = function(newVal) {
+                  currentFn = newVal;
+                };
+                descriptor.configurable = true;
+              }
+            } catch (_) {}
+            return origDefineProperty.call(Object, obj, prop, descriptor);
+          };
+
+          window.addEventListener('error', function(event) {
+            if (event && event.message && event.message.indexOf('fetch') !== -1 && event.message.indexOf('getter') !== -1) {
+              event.preventDefault();
+              if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+              return true;
+            }
+          }, true);
+        } catch (_) {}
+      })();
+    </script>
+    
     <!-- Primary SEO Metadata -->
     <title>Toolora — Free Online Tools for Images, PDFs, Text &amp; More</title>
     <meta name="description" content="Free, fast and privacy-friendly online tools for compressing images and PDFs, converting files, calculating percentages and age, formatting JSON, generating QR codes, and more." />
@@ -11,6 +80,7 @@
     <meta name="author" content="Toolora" />
     <meta name="theme-color" content="#4f46e5" />
     <link rel="canonical" href="https://toolora.com/" />
+    <meta name="google-site-verification" content="IJ--nSaiiQtRtlnpWI7K-0pMl83P2BgTS9WTHj3bCuY" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
