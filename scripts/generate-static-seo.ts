@@ -385,6 +385,167 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#039;');
 }
 
+function generatePreRenderedBody(route: RouteSeo): string {
+  const isHome = route.path === '/';
+  const isToolsCatalog = route.path === '/tools';
+  const isTool = route.path.startsWith('/tools/');
+  const isCategory = route.path.startsWith('/category/');
+
+  const navLinks = [
+    { label: 'All Tools', href: '/tools' },
+    { label: 'Images', href: '/category/images' },
+    { label: 'PDF', href: '/category/pdf' },
+    { label: 'Text', href: '/category/text' },
+    { label: 'Developer', href: '/category/developer' },
+    { label: 'Calculators', href: '/category/calculators' },
+  ];
+
+  let mainContent = '';
+
+  if (isHome) {
+    mainContent = `
+      <section class="mb-12 text-center">
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">Toolora — Free Online Tools for Images, PDFs, Text &amp; More</h1>
+        <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">Fast, privacy-friendly online utilities processed 100% locally in your web browser. Zero server uploads, zero subscriptions, zero limits.</p>
+      </section>
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Popular Free Online Tools</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          ${TOOLS.map(
+            (t) => `
+            <a href="/tools/${t.slug}" class="block p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:shadow-lg transition">
+              <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">${escapeHtml(t.name)}</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400">${escapeHtml(t.shortDescription)}</p>
+            </a>
+          `
+          ).join('')}
+        </div>
+      </section>
+    `;
+  } else if (isToolsCatalog) {
+    mainContent = `
+      <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="hover:underline">Home</a></li>
+          <li>/</li>
+          <li class="font-semibold text-slate-800 dark:text-slate-200">Tools</li>
+        </ol>
+      </nav>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">All Free Online Tools</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">${escapeHtml(route.description)}</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        ${TOOLS.map(
+          (t) => `
+          <a href="/tools/${t.slug}" class="block p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:shadow-lg transition">
+            <h2 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">${escapeHtml(t.name)}</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-400">${escapeHtml(t.shortDescription)}</p>
+          </a>
+        `
+        ).join('')}
+      </div>
+    `;
+  } else if (isTool) {
+    const slug = route.path.replace('/tools/', '');
+    const tool = TOOLS.find((t) => t.slug === slug);
+    if (tool) {
+      mainContent = `
+        <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
+          <ol class="flex items-center gap-2">
+            <li><a href="/" class="hover:underline">Home</a></li>
+            <li>/</li>
+            <li><a href="/tools" class="hover:underline">Tools</a></li>
+            <li>/</li>
+            <li class="font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(tool.name)}</li>
+          </ol>
+        </nav>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">${escapeHtml(tool.h1Title)}</h1>
+        <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">${escapeHtml(tool.longDescription)}</p>
+        <div class="p-8 mb-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-center">
+          <p class="font-medium text-slate-700 dark:text-slate-300">Toolora interactive ${escapeHtml(tool.name)} is loaded in your browser.</p>
+        </div>
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">What is ${escapeHtml(tool.name)}?</h2>
+          ${tool.whatIsParagraphs.map((p) => `<p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed">${escapeHtml(p)}</p>`).join('')}
+        </section>
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Frequently Asked Questions</h2>
+          <div class="space-y-4">
+            ${tool.faqs.map((f) => `
+              <div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-2">${escapeHtml(f.question)}</h3>
+                <p class="text-slate-600 dark:text-slate-400">${escapeHtml(f.answer)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    }
+  } else if (isCategory) {
+    const catId = route.path.replace('/category/', '');
+    const cat = CATEGORIES.find((c) => c.id === catId);
+    const categoryTools = TOOLS.filter((t) => t.category === catId);
+    mainContent = `
+      <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="hover:underline">Home</a></li>
+          <li>/</li>
+          <li class="font-semibold text-slate-800 dark:text-slate-200">${cat ? escapeHtml(cat.name) : 'Category'}</li>
+        </ol>
+      </nav>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">Free ${cat ? escapeHtml(cat.name) : ''} Tools Online</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">${cat ? escapeHtml(cat.description) : ''}</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        ${categoryTools.map(
+          (t) => `
+          <a href="/tools/${t.slug}" class="block p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:shadow-lg transition">
+            <h2 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">${escapeHtml(t.name)}</h2>
+            <p class="text-sm text-slate-600 dark:text-slate-400">${escapeHtml(t.shortDescription)}</p>
+          </a>
+        `
+        ).join('')}
+      </div>
+    `;
+  } else {
+    // Informational page (/about, /privacy-policy, etc.)
+    const cleanHeading = route.title.split('—')[0].trim();
+    mainContent = `
+      <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
+        <ol class="flex items-center gap-2">
+          <li><a href="/" class="hover:underline">Home</a></li>
+          <li>/</li>
+          <li class="font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(cleanHeading)}</li>
+        </ol>
+      </nav>
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">${escapeHtml(cleanHeading)}</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">${escapeHtml(route.description)}</p>
+    `;
+  }
+
+  return `
+    <header class="border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur sticky top-0 z-10 py-4 px-6">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <a href="/" class="text-xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">Toolora</a>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+          ${navLinks.map((l) => `<a href="${l.href}" class="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">${l.label}</a>`).join('')}
+        </nav>
+      </div>
+    </header>
+    <main class="max-w-6xl mx-auto px-6 py-10">${mainContent}</main>
+    <footer class="border-t border-slate-200 dark:border-slate-800 mt-20 py-10 px-6 bg-slate-50 dark:bg-slate-950 text-slate-500 text-sm">
+      <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <p>&copy; ${new Date().getFullYear()} Toolora. 100% Client-Side Privacy Guaranteed.</p>
+        <div class="flex items-center gap-6">
+          <a href="/about" class="hover:underline">About</a>
+          <a href="/privacy-policy" class="hover:underline">Privacy Policy</a>
+          <a href="/terms" class="hover:underline">Terms</a>
+          <a href="/contact" class="hover:underline">Contact</a>
+          <a href="/disclaimer" class="hover:underline">Disclaimer</a>
+        </div>
+      </div>
+    </footer>
+  `;
+}
+
 function generateHtmlForRoute(templateHtml: string, route: RouteSeo): string {
   let html = templateHtml;
 
@@ -456,20 +617,18 @@ function generateHtmlForRoute(templateHtml: string, route: RouteSeo): string {
 
     const scriptTag = `<script id="dynamic-json-ld" type="application/ld+json">${JSON.stringify(payload)}</script>`;
 
-    // If route is homepage, replace the global structured data script in index.html
-    if (route.path === '/') {
-      html = html.replace(
-        /<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i,
-        scriptTag
-      );
-    } else {
-      // Replace existing global script with route-specific script
-      html = html.replace(
-        /<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i,
-        scriptTag
-      );
-    }
+    html = html.replace(
+      /<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i,
+      scriptTag
+    );
   }
+
+  // 7. Inject pre-rendered semantic body inside <div id="root"> so search crawlers and lynx/curl get full content & visible H1
+  const bodyHtml = generatePreRenderedBody(route);
+  html = html.replace(
+    /<div id="root"><\/div>/i,
+    `<div id="root">${bodyHtml}</div>`
+  );
 
   return html;
 }

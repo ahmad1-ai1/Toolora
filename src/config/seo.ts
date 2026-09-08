@@ -1,9 +1,24 @@
 /**
  * Global SEO Configuration for Toolora
- * https://toolora-git-main-toolora-tools.vercel.app
+ * https://toolora.workers.dev
  */
 
-export const SITE_URL = 'https://toolora-git-main-toolora-tools.vercel.app';
+const getEnvSiteUrl = (): string | undefined => {
+  if (typeof process !== 'undefined' && process.env) {
+    if (process.env.VITE_SITE_URL) return process.env.VITE_SITE_URL;
+    if (process.env.SITE_URL) return process.env.SITE_URL;
+  }
+  try {
+    // @ts-expect-error import.meta.env may be populated by Vite
+    if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SITE_URL) {
+      // @ts-expect-error
+      return import.meta.env.VITE_SITE_URL;
+    }
+  } catch (_) {}
+  return undefined;
+};
+
+export const SITE_URL = getEnvSiteUrl() || 'https://toolora.workers.dev';
 export const SITE_NAME = 'Toolora';
 export const DEFAULT_TITLE = 'Toolora — Free Online Tools for Images, PDFs, Text & More';
 export const DEFAULT_DESCRIPTION =

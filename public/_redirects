@@ -1,6 +1,0 @@
-/google63909bce1f342ce4.html  /google63909bce1f342ce4.html  200!
-/robots.txt                   /robots.txt                   200!
-/sitemap.xml                  /sitemap.xml                  200!
-/favicon.svg                  /favicon.svg                  200!
-/assets/*                     /assets/:splat                200!
-/*                            /index.html                   200

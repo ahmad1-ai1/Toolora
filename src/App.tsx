@@ -27,19 +27,25 @@ const AppContent: React.FC = () => {
 
   // Route Dispatcher
   const renderRoute = () => {
+    // Normalize path by stripping trailing slash (except root '/')
+    const normPath =
+      currentPath.length > 1 && currentPath.endsWith('/')
+        ? currentPath.slice(0, -1)
+        : currentPath || '/';
+
     // 1. Home
-    if (currentPath === '/' || currentPath === '') {
+    if (normPath === '/' || normPath === '') {
       return <HomePage onOpenSearch={() => setSearchOpen(true)} />;
     }
 
     // 2. All Tools catalog
-    if (currentPath === '/tools') {
+    if (normPath === '/tools') {
       return <CategoryPage categoryId="all" />;
     }
 
     // 3. Category Page: /category/:id
-    if (currentPath.startsWith('/category/')) {
-      const catId = currentPath.replace('/category/', '') as ToolCategory;
+    if (normPath.startsWith('/category/')) {
+      const catId = normPath.replace('/category/', '') as ToolCategory;
       const validCategory = CATEGORIES.find((c) => c.id === catId);
       if (validCategory) {
         return <CategoryPage categoryId={catId} />;
@@ -47,7 +53,7 @@ const AppContent: React.FC = () => {
     }
 
     // 4. Tool Page: matches /tools/:slug, /tool/:slug, or /:slug
-    const toolSlug = currentPath
+    const toolSlug = normPath
       .replace(/^\/tools\//, '')
       .replace(/^\/tool\//, '')
       .replace(/^\//, '');
@@ -55,9 +61,9 @@ const AppContent: React.FC = () => {
     const matchedTool = TOOLS.find(
       (t) =>
         t.slug === toolSlug ||
-        `/tools/${t.slug}` === currentPath ||
-        `/tool/${t.slug}` === currentPath ||
-        `/${t.slug}` === currentPath
+        `/tools/${t.slug}` === normPath ||
+        `/tool/${t.slug}` === normPath ||
+        `/${t.slug}` === normPath
     );
 
     if (matchedTool) {
@@ -65,11 +71,11 @@ const AppContent: React.FC = () => {
     }
 
     // 5. Static & Legal Pages
-    if (currentPath === '/about') return <AboutPage />;
-    if (currentPath === '/contact') return <ContactPage />;
-    if (currentPath === '/privacy-policy') return <LegalPage type="privacy" />;
-    if (currentPath === '/terms') return <LegalPage type="terms" />;
-    if (currentPath === '/disclaimer') return <LegalPage type="disclaimer" />;
+    if (normPath === '/about') return <AboutPage />;
+    if (normPath === '/contact') return <ContactPage />;
+    if (normPath === '/privacy-policy') return <LegalPage type="privacy" />;
+    if (normPath === '/terms') return <LegalPage type="terms" />;
+    if (normPath === '/disclaimer') return <LegalPage type="disclaimer" />;
 
     // 6. 404 Fallback
     return <NotFoundPage />;
