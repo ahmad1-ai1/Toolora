@@ -1,0 +1,6 @@
+{
+  "name": "Free Online Tools - Image, PDF & Utility Suite",
+  "description": "Fast, simple, privacy-friendly online utilities for images, PDFs, text, calculations and everyday productivity.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
