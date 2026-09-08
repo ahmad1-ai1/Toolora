@@ -1,6 +1,6 @@
 {
-  "name": "Free Online Tools - Image, PDF & Utility Suite",
-  "description": "Fast, simple, privacy-friendly online utilities for images, PDFs, text, calculations and everyday productivity.",
+  "name": "Toolora — Free Online Tools for Images, PDFs, Text & More",
+  "description": "Free, fast and privacy-friendly online tools for compressing images and PDFs, converting files, calculating percentages and age, formatting JSON, generating QR codes, and more.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

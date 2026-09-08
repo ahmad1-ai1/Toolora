@@ -65,9 +65,9 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-base tracking-tight font-display flex items-center gap-1.5">
-                OmniTools
+                Toolora
                 <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.2 rounded bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
-                  Pro
+                  Free
                 </span>
               </span>
               <span className="text-[11px] text-gray-500 -mt-0.5 hidden sm:inline">100% Free &amp; Private</span>
@@ -244,7 +244,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenSearch }) => {
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-lg text-sm"
             >
-              About OmniTools
+              About Toolora
             </Link>
             <Link
               href="/privacy-policy"

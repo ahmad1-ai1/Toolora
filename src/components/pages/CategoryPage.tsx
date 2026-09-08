@@ -2,10 +2,11 @@ import React from 'react';
 import { Breadcrumbs } from '../common/Breadcrumbs';
 import { ToolCard } from '../common/ToolCard';
 import { ToolIcon } from '../common/ToolIcon';
-import { TOOLS, CATEGORIES, CategoryInfo } from '../../data/tools';
+import { TOOLS, CATEGORIES } from '../../data/tools';
 import { ToolCategory } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
 import { Link } from '../../context/RouterContext';
+import { SeoHead } from '../seo/SeoHead';
 
 interface CategoryPageProps {
   categoryId?: ToolCategory | 'all';
@@ -21,16 +22,28 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId = 'all' }
     : TOOLS.filter((t) => t.category === categoryId);
 
   const pageTitle = category ? `${category.name} Tools` : 'All Online Tools';
+  const seoTitle = category
+    ? `Free ${category.name} Tools Online — Fast & Private | Toolora`
+    : `All Free Online Tools — Images, PDFs, Text & More | Toolora`;
+
   const pageDesc = category
     ? category.description
     : `Explore our collection of ${TOOLS.length} free, fast, and privacy-friendly utilities for images, PDFs, text, developer tasks, and calculations.`;
 
+  const canonicalPath = categoryId === 'all' ? '/tools' : `/category/${categoryId}`;
+
   return (
     <div className="min-h-screen py-8 sm:py-12">
+      <SeoHead
+        title={seoTitle}
+        description={pageDesc}
+        path={canonicalPath}
+      />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <Breadcrumbs
           items={[
-            { label: 'Home', href: '/' },
+            { label: 'Tools', href: '/tools' },
             { label: pageTitle },
           ]}
         />
@@ -39,7 +52,7 @@ export const CategoryPage: React.FC<CategoryPageProps> = ({ categoryId = 'all' }
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             {category && (
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center shrink-0">
                 <ToolIcon name={category.icon} className="w-6 h-6" />
               </div>
             )}

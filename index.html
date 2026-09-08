@@ -3,15 +3,73 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Online Tools - Image, PDF &amp; Utility Suite</title>
-    <meta name="description" content="Fast, simple, privacy-friendly online utilities for images, PDFs, text, calculations and everyday productivity. No sign-up required." />
-    <meta property="og:title" content="Free Online Tools - Image, PDF &amp; Utility Suite" />
-    <meta property="og:description" content="Fast, simple, privacy-friendly online utilities for images, PDFs, text, calculations and everyday productivity." />
+    
+    <!-- Primary SEO Metadata -->
+    <title>Toolora — Free Online Tools for Images, PDFs, Text &amp; More</title>
+    <meta name="description" content="Free, fast and privacy-friendly online tools for compressing images and PDFs, converting files, calculating percentages and age, formatting JSON, generating QR codes, and more." />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="Toolora" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link rel="canonical" href="https://toolora.com/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://toolora.com/" />
+    <meta property="og:site_name" content="Toolora" />
+    <meta property="og:title" content="Toolora — Free Online Tools for Images, PDFs, Text &amp; More" />
+    <meta property="og:description" content="Free, fast and privacy-friendly online tools for compressing images and PDFs, converting files, calculating percentages and age, formatting JSON, generating QR codes, and more." />
+    <meta property="og:image" content="https://toolora.com/og-image.png" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@toolora" />
+    <meta name="twitter:creator" content="@toolora" />
+    <meta name="twitter:title" content="Toolora — Free Online Tools for Images, PDFs, Text &amp; More" />
+    <meta name="twitter:description" content="Free, fast and privacy-friendly online tools for compressing images and PDFs, converting files, calculating percentages and age, formatting JSON, generating QR codes, and more." />
+    <meta name="twitter:image" content="https://toolora.com/og-image.png" />
+
+    <!-- Fonts & Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Global Structured Data: WebSite & Organization (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://toolora.com/#organization",
+          "name": "Toolora",
+          "url": "https://toolora.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://toolora.com/favicon.svg"
+          },
+          "description": "Free, fast and privacy-friendly online tools for compressing images and PDFs, converting files, calculating percentages and age, formatting JSON, generating QR codes, and more."
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://toolora.com/#website",
+          "url": "https://toolora.com/",
+          "name": "Toolora",
+          "publisher": {
+            "@id": "https://toolora.com/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://toolora.com/tools?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body class="min-h-screen bg-[#0d0f12] text-[#f4f5f7] antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
     <div id="root"></div>

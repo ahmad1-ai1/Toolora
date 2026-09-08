@@ -7,9 +7,6 @@ import {
   Lock,
   Globe,
   ArrowRight,
-  CheckCircle2,
-  FileText,
-  HelpCircle,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
@@ -19,6 +16,8 @@ import { AdSlot } from '../common/AdSlot';
 import { ToolCategory } from '../../types';
 import { useTheme } from '../../context/ThemeContext';
 import { Link } from '../../context/RouterContext';
+import { SeoHead } from '../seo/SeoHead';
+import { SITE_NAME, SITE_URL } from '../../config/seo';
 
 interface HomePageProps {
   onOpenSearch: () => void;
@@ -51,25 +50,46 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
 
   const homeFaqs = [
     {
-      q: 'Are these tools completely free to use?',
+      q: 'Are Toolora online tools completely free to use?',
       a: 'Yes, 100% free with no hidden paywalls, no watermarks, and no sign-up or credit card requirements.',
     },
     {
       q: 'How does client-side file processing protect my privacy?',
-      a: 'When you upload an image or PDF, processing occurs inside your web browser’s local memory utilizing modern WebAssembly and Canvas APIs. The files are never transmitted to our servers or any cloud database.',
+      a: 'When you compress an image or convert a PDF, processing occurs inside your web browser’s local memory utilizing modern WebAssembly and HTML5 Canvas APIs. Your files are never transmitted to our servers or any cloud database.',
     },
     {
-      q: 'Can I use OmniTools on my smartphone or tablet?',
-      a: 'Yes. OmniTools is designed mobile-first with adaptive touch gestures, fluid layouts, and responsive interfaces tested across iOS and Android.',
+      q: 'Can I use Toolora on my smartphone or tablet?',
+      a: 'Yes. Toolora is designed mobile-first with adaptive touch gestures, fluid layouts, and responsive interfaces tested across iOS and Android.',
     },
     {
-      q: 'Do you keep copies of my converted files?',
-      a: 'Never. Because the files are never received by our servers, it is technically impossible for us to view, store, or share your documents.',
+      q: 'Do you keep copies of my uploaded or converted files?',
+      a: 'Never. Because your files are never received by our servers, it is technically impossible for anyone else to view, store, or share your documents.',
     },
   ];
 
+  const homePageFaqSchema = {
+    '@type': 'FAQPage',
+    '@id': `${SITE_URL}/#faq`,
+    mainEntity: homeFaqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      },
+    })),
+  };
+
   return (
     <div className="min-h-screen">
+      {/* Dynamic SEO Meta for Homepage */}
+      <SeoHead
+        title="Toolora — Free Online Tools for Images, PDFs, Text & More"
+        description="Free, fast and privacy-friendly online tools for compressing images and PDFs, converting files, calculating percentages and age, formatting JSON, generating QR codes, and more."
+        path="/"
+        structuredData={homePageFaqSchema}
+      />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-gray-200/60 dark:border-[#1a1f29]">
         {/* Subtle background glow */}
@@ -81,15 +101,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
             <span>Fast, Private &amp; Free Utilities</span>
           </div>
 
+          {/* Primary H1: Exactly ONE on the Homepage */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white font-display">
-            Everyday online tools,{' '}
+            Free Online Tools for{' '}
             <span className="bg-gradient-to-r from-indigo-500 via-violet-500 to-indigo-400 bg-clip-text text-transparent">
-              built with privacy first.
+              Images, PDFs, Text &amp; More
             </span>
           </h1>
 
           <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-            Compress images, merge PDFs, generate QR codes, analyze text, and solve calculations in seconds — right inside your browser without uploading your files.
+            Free, fast and privacy-friendly online tools for compressing images and PDFs, converting files, calculating percentages and age, formatting JSON, generating QR codes, and more.
           </p>
 
           {/* Quick Search Bar */}
@@ -107,12 +128,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search tools (e.g. compress pdf, resize image, qr code)..."
+                aria-label="Search tools"
                 className="w-full px-3.5 py-3.5 bg-transparent text-sm sm:text-base outline-none text-gray-900 dark:text-white placeholder:text-gray-400"
               />
               <button
                 onClick={onOpenSearch}
                 className="mr-3 px-2 py-1 text-[11px] font-mono text-gray-400 bg-gray-100 dark:bg-[#1a1f28] rounded-md border border-gray-200 dark:border-[#262c3a] hidden sm:block"
-                title="Open command search"
+                title="Open command search (Cmd+K)"
               >
                 ⌘K
               </button>
@@ -123,7 +145,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-gray-500 dark:text-gray-400 pt-3">
             <span className="flex items-center gap-1.5 font-medium">
               <ShieldCheck className="w-4 h-4 text-emerald-500" />
-              100% Client-Side
+              100% Client-Side Privacy
             </span>
             <span className="flex items-center gap-1.5 font-medium">
               <Zap className="w-4 h-4 text-amber-500" />
@@ -166,7 +188,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-display">
-                All Utilities
+                All Free Utilities
               </h2>
               <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-0.5">
                 Showing {filteredTools.length} {filteredTools.length === 1 ? 'utility' : 'utilities'}
@@ -216,16 +238,21 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
               ))}
             </div>
           ) : (
-            <div className={`p-12 rounded-3xl border text-center space-y-3 ${
-              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-gray-50 border-gray-200'
-            }`}>
+            <div
+              className={`p-12 rounded-3xl border text-center space-y-3 ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-gray-50 border-gray-200'
+              }`}
+            >
               <Search className="w-8 h-8 text-gray-400 mx-auto" />
               <h3 className="font-bold text-gray-900 dark:text-white">No tools found</h3>
               <p className="text-xs text-gray-400 max-w-sm mx-auto">
                 No utilities match your search term "{searchQuery}". Try searching for something else or reset the filter.
               </p>
               <button
-                onClick={() => { setSearchQuery(''); setSelectedCategory('all'); }}
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory('all');
+                }}
                 className="text-xs text-indigo-500 font-semibold hover:underline pt-2"
               >
                 Reset All Filters
@@ -237,11 +264,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
         {/* Reserved Placement Ad Banner */}
         <AdSlot id="home-inline-banner" label="Featured Partner" />
 
-        {/* Why Choose OmniTools Section */}
+        {/* Why Choose Toolora Section */}
         <section id="why-choose-us" className="space-y-6">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white font-display">
-              Why people choose OmniTools
+              Why people choose Toolora
             </h2>
             <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1">
               Built from the ground up to solve everyday file tasks without the frustrations of modern internet tools.
@@ -249,9 +276,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className={`p-6 rounded-3xl border space-y-3 ${
-              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
-            }`}>
+            <div
+              className={`p-6 rounded-3xl border space-y-3 ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
               <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5" />
               </div>
@@ -263,9 +292,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
               </p>
             </div>
 
-            <div className={`p-6 rounded-3xl border space-y-3 ${
-              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
-            }`}>
+            <div
+              className={`p-6 rounded-3xl border space-y-3 ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
               <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
                 <Zap className="w-5 h-5" />
               </div>
@@ -277,9 +308,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
               </p>
             </div>
 
-            <div className={`p-6 rounded-3xl border space-y-3 ${
-              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
-            }`}>
+            <div
+              className={`p-6 rounded-3xl border space-y-3 ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
               <div className="w-10 h-10 rounded-2xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
                 <Globe className="w-5 h-5" />
               </div>
@@ -294,9 +327,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
         </section>
 
         {/* Frequently Asked Questions */}
-        <section id="home-faq" className={`p-6 sm:p-10 rounded-3xl border ${
-          isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
-        }`}>
+        <section
+          id="home-faq"
+          className={`p-6 sm:p-10 rounded-3xl border ${
+            isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+          }`}
+        >
           <div className="text-center max-w-xl mx-auto mb-8">
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white font-display">
               Frequently Asked Questions
@@ -324,6 +360,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenSearch }) => {
                 >
                   <button
                     onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                    aria-expanded={isOpen}
                     className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
                   >
                     <span className="font-semibold text-sm text-gray-900 dark:text-white">

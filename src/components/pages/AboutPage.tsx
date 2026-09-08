@@ -5,12 +5,12 @@ import {
   Lock,
   Heart,
   Globe,
-  Cpu,
   ArrowRight,
 } from 'lucide-react';
 import { Breadcrumbs } from '../common/Breadcrumbs';
 import { useTheme } from '../../context/ThemeContext';
 import { Link } from '../../context/RouterContext';
+import { SeoHead } from '../seo/SeoHead';
 
 export const AboutPage: React.FC = () => {
   const { theme } = useTheme();
@@ -18,8 +18,14 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="min-h-screen py-8 sm:py-12">
+      <SeoHead
+        title="About Toolora — Free, Fast & Privacy-Friendly Online Utilities"
+        description="Learn more about Toolora's mission to provide fast, completely free, and zero-server client-side utilities for images, PDFs, text, and calculators."
+        path="/about"
+      />
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'About Us' }]} />
+        <Breadcrumbs items={[{ label: 'About Toolora' }]} />
 
         {/* Hero */}
         <div className="space-y-4">
@@ -27,7 +33,7 @@ export const AboutPage: React.FC = () => {
             Fast, private utilities built for everyone.
           </h1>
           <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
-            OmniTools was founded on a simple realization: performing basic everyday tasks like compressing a photo, converting a PDF, or generating a QR code shouldn’t require handing over personal documents to unknown remote servers or fighting through aggressive ads.
+            Toolora was founded on a simple realization: performing basic everyday tasks like compressing a photo, converting a PDF, or generating a QR code shouldn’t require handing over personal documents to unknown remote servers or fighting through aggressive ads.
           </p>
         </div>
 
@@ -37,9 +43,9 @@ export const AboutPage: React.FC = () => {
             <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-base text-gray-900 dark:text-white">
+            <h2 className="font-bold text-base text-gray-900 dark:text-white">
               Zero Server Uploads
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
               We leverage browser memory, WebAssembly, and HTML5 Canvas so your data never touches our cloud.
             </p>
@@ -49,9 +55,9 @@ export const AboutPage: React.FC = () => {
             <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
               <Zap className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-base text-gray-900 dark:text-white">
+            <h2 className="font-bold text-base text-gray-900 dark:text-white">
               Zero Waiting Time
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
               No artificial timers, queues, captcha walls, or sign-up gates to slow you down.
             </p>
@@ -61,9 +67,9 @@ export const AboutPage: React.FC = () => {
             <div className="w-10 h-10 rounded-2xl bg-violet-500/10 text-violet-500 flex items-center justify-center">
               <Globe className="w-5 h-5" />
             </div>
-            <h3 className="font-bold text-base text-gray-900 dark:text-white">
+            <h2 className="font-bold text-base text-gray-900 dark:text-white">
               Globally Accessible
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
               Lightweight bundle sizes and responsive designs that perform smoothly across all devices and bandwidths.
             </p>
@@ -79,7 +85,7 @@ export const AboutPage: React.FC = () => {
             Traditional free-tool websites monetize users by uploading their documents to remote servers, converting them asynchronously, and serving intrusive full-page popups. That architecture is dangerous for sensitive personal documents like contracts, medical paperwork, and personal photographs.
           </p>
           <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-            OmniTools embraces the modern capabilities of client browsers. By compiling robust algorithms into optimized JavaScript and WebAssembly, modern laptops and phones can process hundreds of megabytes of media in fractions of a second — completely offline and entirely in memory.
+            Toolora embraces the modern capabilities of client browsers. By compiling robust algorithms into optimized JavaScript and WebAssembly, modern laptops and phones can process hundreds of megabytes of media in fractions of a second — completely offline and entirely in memory.
           </p>
           <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
             We are committed to maintaining these utilities as a free public resource. If you ever have questions, suggestions, or ideas for new tools, we would love to hear from you.

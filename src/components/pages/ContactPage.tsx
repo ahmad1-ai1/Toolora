@@ -4,13 +4,11 @@ import {
   MessageSquare,
   Send,
   CheckCircle2,
-  Sparkles,
-  HelpCircle,
   AlertCircle,
 } from 'lucide-react';
 import { Breadcrumbs } from '../common/Breadcrumbs';
 import { useTheme } from '../../context/ThemeContext';
-import { Link } from '../../context/RouterContext';
+import { SeoHead } from '../seo/SeoHead';
 
 export const ContactPage: React.FC = () => {
   const { theme } = useTheme();
@@ -40,12 +38,18 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="min-h-screen py-8 sm:py-12">
+      <SeoHead
+        title="Contact Toolora — Feedback, Support & Tool Suggestions"
+        description="Contact the Toolora team. Share feedback, submit bug reports, or suggest new privacy-focused online utilities."
+        path="/contact"
+      />
+
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contact Us' }]} />
+        <Breadcrumbs items={[{ label: 'Contact Us' }]} />
 
         <div className="space-y-2">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white font-display">
-            Get in touch with us
+            Get in touch with Toolora
           </h1>
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400">
             Have a suggestion, found a bug, or want to recommend a new tool? We’d love to hear from you.

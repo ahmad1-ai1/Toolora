@@ -1,3 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://ais-pre-l5a3wghjj7xgnvj4xymogf-575367822068.asia-east1.run.app/sitemap.xml
+Allow: /tools/
+Allow: /tools/*
+
+Sitemap: https://toolora.com/sitemap.xml

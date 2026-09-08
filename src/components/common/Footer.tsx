@@ -44,7 +44,7 @@ export const Footer: React.FC = () => {
                 <Wrench className="w-4 h-4" />
               </div>
               <span className="font-bold text-lg text-gray-900 dark:text-white tracking-tight">
-                OmniTools
+                Toolora
               </span>
             </Link>
             <p className="text-sm max-w-sm leading-relaxed">
@@ -101,7 +101,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/about" className="hover:text-indigo-500 transition-colors">
-                  About OmniTools
+                  About Toolora
                 </Link>
               </li>
               <li>
@@ -130,7 +130,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright line */}
         <div className="border-t mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs border-gray-200 dark:border-[#1e232e]">
-          <p>© {new Date().getFullYear()} OmniTools Suite. All rights reserved. Free tools for everyday work.</p>
+          <p>© {new Date().getFullYear()} Toolora. All rights reserved. Free, fast and privacy-friendly online tools.</p>
           <div className="flex items-center gap-1 text-gray-400">
             <span>Crafted for high-performance productivity</span>
             <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500/30" />

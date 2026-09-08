@@ -1,8 +1,8 @@
 import React from 'react';
-import { ShieldCheck, FileText, AlertCircle, Lock } from 'lucide-react';
+import { ShieldCheck, FileText, AlertCircle } from 'lucide-react';
 import { Breadcrumbs } from '../common/Breadcrumbs';
 import { useTheme } from '../../context/ThemeContext';
-import { Link } from '../../context/RouterContext';
+import { SeoHead } from '../seo/SeoHead';
 
 interface LegalPageProps {
   type: 'privacy' | 'terms' | 'disclaimer';
@@ -15,25 +15,40 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
   const config = {
     privacy: {
       title: 'Privacy Policy',
+      seoTitle: 'Privacy Policy — Toolora Zero-Retention Guarantee',
+      path: '/privacy-policy',
       subtitle: 'Our strict commitment to zero data retention and client-side processing.',
+      metaDescription: 'Read the Toolora Privacy Policy. We do not store, view, or upload your files to any remote server. 100% client-side data privacy guarantee.',
       lastUpdated: 'May 2025',
     },
     terms: {
       title: 'Terms of Service',
-      subtitle: 'Guidelines for accessing and using OmniTools utilities.',
+      seoTitle: 'Terms of Service — Toolora Free Online Utilities',
+      path: '/terms',
+      subtitle: 'Guidelines for accessing and using Toolora utilities.',
+      metaDescription: 'Read the Toolora Terms of Service. Clear, fair terms governing the use of our free browser-based suite of online utilities.',
       lastUpdated: 'May 2025',
     },
     disclaimer: {
       title: 'Legal Disclaimer',
+      seoTitle: 'Legal Disclaimer — Toolora Calculations & Conversions',
+      path: '/disclaimer',
       subtitle: 'Important disclosures regarding document conversion and calculations.',
+      metaDescription: 'Toolora Legal Disclaimer. Disclosures concerning file conversions, percentage calculations, and chronological age estimates.',
       lastUpdated: 'May 2025',
     },
   }[type];
 
   return (
     <div className="min-h-screen py-8 sm:py-12">
+      <SeoHead
+        title={config.seoTitle}
+        description={config.metaDescription}
+        path={config.path}
+      />
+
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: config.title }]} />
+        <Breadcrumbs items={[{ label: config.title }]} />
 
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-indigo-500 font-semibold text-xs uppercase tracking-wider">
@@ -63,7 +78,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   1. The Client-Side Execution Guarantee
                 </h2>
                 <p>
-                  At OmniTools, privacy is not just a policy; it is an architectural foundation. All file manipulation tools — including the Image Compressor, PDF Compressor, JPG to PDF, PDF to JPG, and Image Resizer — execute completely within your web browser using HTML5 Canvas, WebAssembly, and local JavaScript.
+                  At Toolora, privacy is not just a policy; it is an architectural foundation. All file manipulation tools — including the Image Compressor, PDF Compressor, JPG to PDF, PDF to JPG, and Image Resizer — execute completely within your web browser using HTML5 Canvas, WebAssembly, and local JavaScript.
                 </p>
                 <p className="font-semibold text-emerald-600 dark:text-emerald-400">
                   Your files, documents, photographs, and metadata are never uploaded to our servers, stored in any database, or inspected by third parties.
@@ -93,7 +108,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   4. Third-Party Links &amp; Content
                 </h2>
                 <p>
-                  Our site may contain links to external documentation or partners. We encourage you to review their respective privacy terms when navigating away from OmniTools.
+                  Our site may contain links to external documentation or partners. We encourage you to review their respective privacy terms when navigating away from Toolora.
                 </p>
               </section>
             </>
@@ -106,7 +121,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   1. Acceptance of Terms
                 </h2>
                 <p>
-                  By accessing or using OmniTools, you agree to be bound by these Terms of Service. If you do not agree to all terms, you must discontinue using our services.
+                  By accessing or using Toolora, you agree to be bound by these Terms of Service. If you do not agree to all terms, you must discontinue using our services.
                 </p>
               </section>
 
@@ -115,7 +130,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   2. Permitted Use
                 </h2>
                 <p>
-                  OmniTools provides free utility services for personal and commercial usage. You agree not to use the service for any unlawful activities or in a manner that impairs the platform’s stability or accessibility for others.
+                  Toolora provides free utility services for personal and commercial usage. You agree not to use the service for any unlawful activities or in a manner that impairs the platform’s stability or accessibility for others.
                 </p>
               </section>
 
@@ -124,7 +139,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   3. Intellectual Property
                 </h2>
                 <p>
-                  You retain complete and unreserved ownership of all images, documents, and content processed using our utilities. OmniTools claims no ownership or license over any files created or modified via our browser tools.
+                  You retain complete and unreserved ownership of all images, documents, and content processed using our utilities. Toolora claims no ownership or license over any files created or modified via our browser tools.
                 </p>
               </section>
 
@@ -133,7 +148,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   4. Limitation of Liability
                 </h2>
                 <p>
-                  OmniTools is provided on an "as is" and "as available" basis without warranties of any kind. Under no circumstances shall OmniTools or its contributors be liable for any data loss, computational inaccuracies, or damages arising out of your use of the website.
+                  Toolora is provided on an "as is" and "as available" basis without warranties of any kind. Under no circumstances shall Toolora or its contributors be liable for any data loss, computational inaccuracies, or damages arising out of your use of the website.
                 </p>
               </section>
             </>
@@ -146,7 +161,7 @@ export const LegalPage: React.FC<LegalPageProps> = ({ type }) => {
                   1. General Information Only
                 </h2>
                 <p>
-                  The utilities, calculators, and converters provided on OmniTools are intended for general informational, educational, and workflow convenience purposes.
+                  The utilities, calculators, and converters provided on Toolora are intended for general informational, educational, and workflow convenience purposes.
                 </p>
               </section>
 
