@@ -3,4 +3,4 @@ Allow: /
 Allow: /tools/
 Allow: /tools/*
 
-Sitemap: https://toolora.com/sitemap.xml
+Sitemap: https://toolora-git-main-toolora-tools.vercel.app/sitemap.xml

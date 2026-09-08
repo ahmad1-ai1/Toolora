@@ -1,9 +1,9 @@
 /**
  * Global SEO Configuration for Toolora
- * https://toolora.com
+ * https://toolora-git-main-toolora-tools.vercel.app
  */
 
-export const SITE_URL = 'https://toolora.com';
+export const SITE_URL = 'https://toolora-git-main-toolora-tools.vercel.app';
 export const SITE_NAME = 'Toolora';
 export const DEFAULT_TITLE = 'Toolora — Free Online Tools for Images, PDFs, Text & More';
 export const DEFAULT_DESCRIPTION =
