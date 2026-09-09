@@ -6,6 +6,7 @@ import { Footer } from './components/common/Footer';
 import { CommandPalette } from './components/common/CommandPalette';
 import { HomePage } from './components/pages/HomePage';
 import { ToolPage } from './components/pages/ToolPage';
+import { ToolsPage } from './components/pages/ToolsPage';
 import { CategoryPage } from './components/pages/CategoryPage';
 import { AboutPage } from './components/pages/AboutPage';
 import { ContactPage } from './components/pages/ContactPage';
@@ -40,7 +41,7 @@ const AppContent: React.FC = () => {
 
     // 2. All Tools catalog
     if (normPath === '/tools') {
-      return <CategoryPage categoryId="all" />;
+      return <ToolsPage />;
     }
 
     // 3. Category Page: /category/:id

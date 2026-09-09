@@ -20,6 +20,37 @@ interface RouteSeo {
   structuredData?: object | object[];
 }
 
+const TOOLS_FAQS = [
+  {
+    q: 'Are all the online tools on Toolora completely free to use?',
+    a: 'Yes. Every utility available on Toolora is 100% free with no hidden paywalls, no monthly subscription fees, and no feature locks. You never have to enter credit card information or worry about free trial expirations.',
+  },
+  {
+    q: 'Do I need to download or install any software to use these tools?',
+    a: 'No. Toolora works entirely online in your web browser. You do not need to download executables, run desktop installers, or configure browser extensions. Simply open any tool page on desktop or mobile and begin working immediately.',
+  },
+  {
+    q: 'How does client-side browser processing protect my privacy?',
+    a: 'Where technically accurate—such as our image compression, resizing, and PDF utilities—file processing takes place directly in your device’s browser memory via modern HTML5 Canvas, JavaScript, and WebAssembly APIs. Your files are not transmitted across the internet to our servers or stored in cloud databases, guaranteeing complete data privacy.',
+  },
+  {
+    q: 'Can I use these free online tools on mobile phones and tablets?',
+    a: 'Yes. Toolora is engineered mobile-first with responsive interfaces, touch-friendly controls, and adaptive layouts tested across iOS Safari, Android Chrome, and all major tablet platforms.',
+  },
+  {
+    q: 'Are there any usage limits, task countdowns, or conversion caps?',
+    a: 'No. There are no artificial daily limits, hourly queues, or conversion quotas. You can compress as many photos, convert as many documents, and format as many payloads as your daily workflow requires.',
+  },
+  {
+    q: 'What formats do the image and PDF tools support?',
+    a: 'Our image utilities support widespread digital formats including standard JPG/JPEG, transparent PNG, and modern WebP. Our document tools handle standard PDF documents, enabling effortless conversion between image galleries and PDF files.',
+  },
+  {
+    q: 'What is the difference between client-side tools and traditional cloud tools?',
+    a: 'Traditional web tools require uploading your sensitive files across the internet to a third-party server, waiting in conversion queues, and downloading the finished file back. Client-side tools like Toolora perform calculations and transformations directly on your device’s local CPU and GPU, eliminating network lag, server queues, and remote data leaks.',
+  },
+];
+
 function getRoutes(): RouteSeo[] {
   const routes: RouteSeo[] = [];
 
@@ -96,29 +127,69 @@ function getRoutes(): RouteSeo[] {
   // 2. All Tools Catalog (/tools)
   routes.push({
     path: '/tools',
-    title: 'All Free Online Tools — Images, PDFs, Text & More | Toolora',
-    description: `Explore our collection of ${TOOLS.length} free, fast, and privacy-friendly utilities for images, PDFs, text, developer tasks, and calculations.`,
+    title: 'Free Online Tools — Images, PDFs, Text & Calculators | Toolora',
+    description:
+      'Explore our collection of free, fast, and privacy-friendly online tools for image compression, PDF conversion, text analysis, developer formatting, and math calculations.',
     canonical: `${SITE_URL}/tools`,
     ogType: 'website',
     ogImage: DEFAULT_OG_IMAGE,
-    structuredData: {
-      '@type': 'BreadcrumbList',
-      '@id': `${SITE_URL}/tools#breadcrumb`,
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Home',
-          item: `${SITE_URL}/`,
+    structuredData: [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${SITE_URL}/tools#collection`,
+        url: `${SITE_URL}/tools`,
+        name: 'Free Online Tools — Images, PDFs, Text & More | Toolora',
+        description: `Explore Toolora’s directory of ${TOOLS.length} free online tools for image compression, PDF editing, text analysis, developer formatting, and everyday calculations. 100% private and browser-based.`,
+        isPartOf: {
+          '@type': 'WebSite',
+          '@id': `${SITE_URL}/#website`,
         },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Tools',
-          item: `${SITE_URL}/tools`,
+        mainEntity: {
+          '@type': 'ItemList',
+          '@id': `${SITE_URL}/tools#itemlist`,
+          name: 'Toolora Free Online Tools Catalog',
+          description: 'Comprehensive directory of free client-side online tools.',
+          numberOfItems: TOOLS.length,
+          itemListElement: TOOLS.map((tool, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: tool.name,
+            url: `${SITE_URL}/tools/${tool.slug}`,
+            description: tool.shortDescription,
+          })),
         },
-      ],
-    },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${SITE_URL}/tools#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${SITE_URL}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Free Online Tools',
+            item: `${SITE_URL}/tools`,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${SITE_URL}/tools#faq`,
+        mainEntity: TOOLS_FAQS.map((faq) => ({
+          '@type': 'Question',
+          name: faq.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.a,
+          },
+        })),
+      },
+    ],
   });
 
   // 3. Individual Tools (/tools/:slug)
@@ -423,26 +494,155 @@ function generatePreRenderedBody(route: RouteSeo): string {
       </section>
     `;
   } else if (isToolsCatalog) {
+    const imageTools = TOOLS.filter(
+      (t) => t.slug === 'image-compressor' || t.slug === 'image-resizer'
+    );
+    const pdfTools = TOOLS.filter(
+      (t) =>
+        t.slug === 'pdf-compressor' ||
+        t.slug === 'jpg-to-pdf' ||
+        t.slug === 'pdf-to-jpg'
+    );
+    const textDevTools = TOOLS.filter(
+      (t) =>
+        t.slug === 'word-counter' ||
+        t.slug === 'json-formatter' ||
+        t.slug === 'qr-code-generator'
+    );
+    const calcTools = TOOLS.filter(
+      (t) =>
+        t.slug === 'percentage-calculator' || t.slug === 'age-calculator'
+    );
+
     mainContent = `
       <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
         <ol class="flex items-center gap-2">
           <li><a href="/" class="hover:underline">Home</a></li>
           <li>/</li>
-          <li class="font-semibold text-slate-800 dark:text-slate-200">Tools</li>
+          <li class="font-semibold text-slate-800 dark:text-slate-200">Free Online Tools</li>
         </ol>
       </nav>
-      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">All Free Online Tools</h1>
-      <p class="text-lg text-slate-600 dark:text-slate-300 mb-8">${escapeHtml(route.description)}</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        ${TOOLS.map(
-          (t) => `
-          <a href="/tools/${t.slug}" class="block p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:shadow-lg transition">
-            <h2 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">${escapeHtml(t.name)}</h2>
-            <p class="text-sm text-slate-600 dark:text-slate-400">${escapeHtml(t.shortDescription)}</p>
-          </a>
-        `
-        ).join('')}
-      </div>
+
+      <header class="mb-10">
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">Free Online Tools</h1>
+        <p class="text-lg text-indigo-600 dark:text-indigo-400 font-medium mb-6">High-performance, browser-based utilities engineered for everyday productivity.</p>
+        
+        <div class="p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 text-slate-700 dark:text-slate-300 leading-relaxed space-y-4 mb-8">
+          <p>
+            Welcome to <strong>Toolora</strong>, your comprehensive suite of free online tools engineered for modern web productivity, digital media preparation, and rapid data processing. We created Toolora to remove the friction, paywalls, and intrusive software installations that too often complicate routine digital tasks. Whether you need to compress high-resolution photographs for a website, merge scanned receipts into a clean PDF, format deeply nested JSON payloads, count words for an editorial submission, or calculate exact percentages, Toolora delivers lightning-fast, high-precision results directly in your web browser.
+          </p>
+          <p>
+            Every utility in our collection is <strong>100% free to use</strong> with no hidden fees, no subscription tiers, no usage caps, and no user registration required. Because our tools operate online as lightweight, responsive web applications, there is zero software to download or install. You never have to worry about operating system incompatibilities, administrative permissions, or bulky background executables consuming your device’s memory. Toolora runs smoothly across desktop workstations, laptops, tablets, and smartphones running any modern web browser.
+          </p>
+          <p>
+            Our suite is organized into specialized modules designed to address distinct workflows:
+          </p>
+          <ul class="list-disc pl-5 space-y-2 text-sm">
+            <li>
+              <strong>Image and PDF Tools:</strong> Optimize your digital documents and visual media with tools like our Image Compressor, Image Resizer, PDF Compressor, JPG to PDF Converter, and PDF to JPG Extractor. These utilities help creators, students, and professionals meet strict file size limits for email attachments and upload portals without sacrificing visual fidelity.
+            </li>
+            <li>
+              <strong>Text and Developer Tools:</strong> Streamline writing, coding, and communication tasks. Use the Word Counter to analyze character counts, syllable distribution, and estimated reading times, validate and beautify complex payloads with the JSON Formatter, or produce scannable barcodes with the QR Code Generator.
+            </li>
+            <li>
+              <strong>Calculators and Utilities:</strong> Solve everyday mathematical, calendar, and chronological problems with ease. Quickly calculate percentages, discounts, and margin shifts with our Percentage Calculator, or determine your exact age in years, months, and days using the Age Calculator.
+            </li>
+          </ul>
+          <p>
+            Privacy and security are foundational to our architectural design. Wherever technically feasible, Toolora utilities perform processing <strong>strictly inside your local web browser</strong> using client-side HTML5 Canvas, WebAssembly, and JavaScript APIs. Your private photographs, personal identity documents, financial statements, and proprietary code remain securely on your device—never uploaded to external cloud servers, stored in remote databases, or viewed by third parties.
+          </p>
+        </div>
+
+        <nav aria-label="Tool Categories" class="flex flex-wrap items-center gap-2">
+          <span class="text-xs font-semibold text-slate-500 mr-1">Jump to Category:</span>
+          <a href="#image-tools" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:text-indigo-600 dark:hover:text-indigo-400">Image Tools</a>
+          <a href="#pdf-tools" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:text-indigo-600 dark:hover:text-indigo-400">PDF Tools</a>
+          <a href="#text-developer-tools" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:text-indigo-600 dark:hover:text-indigo-400">Text &amp; Developer Tools</a>
+          <a href="#calculators-utilities" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:text-indigo-600 dark:hover:text-indigo-400">Calculators &amp; Utilities</a>
+          <a href="#tools-faq" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:text-indigo-600 dark:hover:text-indigo-400">Frequently Asked Questions</a>
+        </nav>
+      </header>
+
+      <!-- Category 1: Image Tools -->
+      <section id="image-tools" class="mb-14">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-slate-900 dark:text-white">Image Tools</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-6">Compress, resize, and optimize JPG, PNG, and WebP graphics client-side with zero loss in visual clarity.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+          ${imageTools.map((t) => `
+            <a href="/tools/${t.slug}" class="block p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:shadow-lg transition">
+              <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">${escapeHtml(t.name)}</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400">${escapeHtml(t.shortDescription)}</p>
+            </a>
+          `).join('')}
+        </div>
+        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+          <strong>Connected Image Workflow:</strong> After reducing file weight with the <a href="/tools/image-compressor" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Free Image Compressor</a>, adjust pixel dimensions using the <a href="/tools/image-resizer" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Free Image Resizer</a>, or bundle multiple resized graphics into a single document with our <a href="/tools/jpg-to-pdf" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">JPG to PDF Converter</a>.
+        </div>
+      </section>
+
+      <!-- Category 2: PDF Tools -->
+      <section id="pdf-tools" class="mb-14">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-slate-900 dark:text-white">PDF Tools</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-6">Compress PDF documents, merge photos into professional PDFs, and extract high-resolution JPG pages securely.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+          ${pdfTools.map((t) => `
+            <a href="/tools/${t.slug}" class="block p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:shadow-lg transition">
+              <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">${escapeHtml(t.name)}</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400">${escapeHtml(t.shortDescription)}</p>
+            </a>
+          `).join('')}
+        </div>
+        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+          <strong>Connected Document Workflow:</strong> After combining images into a new file with the <a href="/tools/jpg-to-pdf" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">JPG to PDF Converter</a>, shrink final attachment weight using the <a href="/tools/pdf-compressor" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Free PDF Compressor</a>, or convert pages back into standalone pictures with the <a href="/tools/pdf-to-jpg" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">PDF to JPG Converter</a>.
+        </div>
+      </section>
+
+      <!-- Category 3: Text & Developer Tools -->
+      <section id="text-developer-tools" class="mb-14">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-slate-900 dark:text-white">Text &amp; Developer Tools</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-6">Analyze word counts and reading metrics, validate and beautify JSON objects, and generate scannable QR codes.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+          ${textDevTools.map((t) => `
+            <a href="/tools/${t.slug}" class="block p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:shadow-lg transition">
+              <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">${escapeHtml(t.name)}</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400">${escapeHtml(t.shortDescription)}</p>
+            </a>
+          `).join('')}
+        </div>
+        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+          <strong>Connected Coding &amp; Text Workflow:</strong> Inspect string lengths and token metrics with the <a href="/tools/word-counter" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Online Word Counter</a>, parse and format structured API payloads with the <a href="/tools/json-formatter" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Online JSON Formatter &amp; Validator</a>, or publish links to digital assets using the <a href="/tools/qr-code-generator" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Dynamic QR Code Generator</a>.
+        </div>
+      </section>
+
+      <!-- Category 4: Calculators & Utilities -->
+      <section id="calculators-utilities" class="mb-14">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-slate-900 dark:text-white">Calculators &amp; Utilities</h2>
+        <p class="text-slate-600 dark:text-slate-400 mb-6">Calculate percentage increases, discounts, and margins, or determine exact chronological age across dates.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+          ${calcTools.map((t) => `
+            <a href="/tools/${t.slug}" class="block p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 hover:shadow-lg transition">
+              <h3 class="text-lg font-bold mb-2 text-slate-900 dark:text-white">${escapeHtml(t.name)}</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400">${escapeHtml(t.shortDescription)}</p>
+            </a>
+          `).join('')}
+        </div>
+        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/20 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+          <strong>Connected Calculator Workflow:</strong> Determine numerical growth or margin shifts with the <a href="/tools/percentage-calculator" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Online Percentage Calculator</a>, calculate precise milestone time spans with the <a href="/tools/age-calculator" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Online Age Calculator</a>, or generate direct mobile shortcuts to your calculations with the <a href="/tools/qr-code-generator" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline">Dynamic QR Code Generator</a>.
+        </div>
+      </section>
+
+      <!-- FAQ Section -->
+      <section id="tools-faq" class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-slate-900 dark:text-white">Frequently Asked Questions About Free Online Tools</h2>
+        <div class="space-y-4">
+          ${TOOLS_FAQS.map((f) => `
+            <div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-2">${escapeHtml(f.q)}</h3>
+              <p class="text-slate-600 dark:text-slate-400">${escapeHtml(f.a)}</p>
+            </div>
+          `).join('')}
+        </div>
+      </section>
     `;
   } else if (isTool) {
     const slug = route.path.replace('/tools/', '');
