@@ -218,29 +218,60 @@ function getRoutes(): RouteSeo[] {
       },
     };
 
+    const categoryName = tool.category === 'pdf' ? 'PDF Tools' : categoryInfo ? categoryInfo.name : 'Tools';
+    const categoryPath = categoryInfo ? `/category/${categoryInfo.id}` : '/tools';
+
     const breadcrumbSchema = {
       '@type': 'BreadcrumbList',
       '@id': `${canonicalUrl}#breadcrumb`,
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'Home',
-          item: `${SITE_URL}/`,
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'Tools',
-          item: `${SITE_URL}/tools`,
-        },
-        {
-          '@type': 'ListItem',
-          position: 3,
-          name: tool.name,
-          item: canonicalUrl,
-        },
-      ],
+      itemListElement:
+        tool.slug === 'image-compressor' || tool.slug === 'pdf-compressor'
+          ? [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: `${SITE_URL}/`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Tools',
+                item: `${SITE_URL}/tools`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: tool.name,
+                item: canonicalUrl,
+              },
+            ]
+          : [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: `${SITE_URL}/`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Tools',
+                item: `${SITE_URL}/tools`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: categoryName,
+                item: `${SITE_URL}${categoryPath}`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 4,
+                name: tool.name,
+                item: canonicalUrl,
+              },
+            ],
     };
 
     const faqSchema = {
@@ -325,6 +356,40 @@ function getRoutes(): RouteSeo[] {
               },
             ],
           }
+        : tool.slug === 'jpg-to-pdf'
+        ? {
+            '@type': 'HowTo',
+            '@id': `${canonicalUrl}#howto`,
+            name: 'How to Convert JPG to PDF Online',
+            description:
+              'Step-by-step guide to converting and combining JPG, PNG, and WebP images into a single PDF document online for free using Toolora.',
+            step: [
+              {
+                '@type': 'HowToStep',
+                position: 1,
+                name: 'Add your JPG, PNG, or WebP images',
+                text: 'Add your JPG, PNG, or WebP images by dragging them into the drop zone or browsing your device files.',
+              },
+              {
+                '@type': 'HowToStep',
+                position: 2,
+                name: 'Arrange the pages using the available Move Up / Move Down controls',
+                text: 'Arrange the pages using the available Move Up / Move Down controls on each image card.',
+              },
+              {
+                '@type': 'HowToStep',
+                position: 3,
+                name: 'Choose page size, orientation, and margins',
+                text: 'Choose page size (A4, US Letter, or Fit to Image), orientation, and margins.',
+              },
+              {
+                '@type': 'HowToStep',
+                position: 4,
+                name: 'Create and download the PDF',
+                text: 'Click "Generate PDF" to assemble your document in browser memory, then download the finished PDF.',
+              },
+            ],
+          }
         : null;
 
     routes.push({
@@ -332,7 +397,7 @@ function getRoutes(): RouteSeo[] {
       title: tool.seoTitle,
       description: tool.metaDescription,
       canonical: canonicalUrl,
-      ogType: tool.slug === 'image-compressor' || tool.slug === 'pdf-compressor' ? 'website' : 'article',
+      ogType: 'website',
       ogImage: DEFAULT_OG_IMAGE,
       structuredData: [
         webAppSchema,
@@ -1114,6 +1179,233 @@ function generatePreRenderedBody(route: RouteSeo): string {
           </div>
         </section>
       `;
+    } else if (tool && tool.slug === 'jpg-to-pdf') {
+      mainContent = `
+        <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
+          <ol class="flex items-center gap-2">
+            <li><a href="/" class="hover:underline">Home</a></li>
+            <li>/</li>
+            <li><a href="/tools" class="hover:underline">Tools</a></li>
+            <li>/</li>
+            <li><a href="/category/pdf" class="hover:underline">PDF Tools</a></li>
+            <li>/</li>
+            <li class="font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(tool.name)}</li>
+          </ol>
+        </nav>
+
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">${escapeHtml(tool.h1Title)}</h1>
+        <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">${escapeHtml(tool.longDescription)}</p>
+
+        <!-- Interactive Workbench Card -->
+        <div class="p-8 mb-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-center">
+          <p class="font-medium text-slate-700 dark:text-slate-300">Toolora interactive ${escapeHtml(tool.name)} is loaded in your browser.</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Convert and combine JPG, PNG, and WebP images into a single PDF document in your browser.</p>
+        </div>
+
+        <!-- Section 1: What is JPG to PDF? -->
+        <section id="what-is-tool" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">What is ${escapeHtml(tool.name)}?</h2>
+          <div class="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm">
+            ${tool.whatIsParagraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
+          </div>
+        </section>
+
+        <!-- Section 2: How to Convert JPG to PDF Online -->
+        <section id="how-to-use" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">How to Convert JPG to PDF Online</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${tool.howToSteps.map((step, idx) => `
+              <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 flex items-start gap-3.5">
+                <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                  ${idx + 1}
+                </div>
+                <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed pt-0.5">${escapeHtml(step)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- Section 3: Convert Multiple JPGs into One PDF -->
+        <section id="multiple-jpg-to-pdf" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Convert Multiple JPGs into One PDF</h2>
+          <div class="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm">
+            <p>Whether compiling a multi-page school assignment, a contract draft, or a batch of photo receipts, Toolora makes it easy to <strong>convert multiple JPGs into one PDF</strong> file. You can select single photos or batch-upload dozens of images simultaneously using our drag-and-drop zone or device file browser.</p>
+            <p>Our tool supports mixed format batches: you can combine JPG, JPEG, PNG, and WebP files into the same PDF document without converting them beforehand. Each photo is rendered into its own page card displaying a thumbnail preview, file name, and dimensions.</p>
+            <p>To ensure your document flows in the intended sequence, use the vertical <strong>Move Up</strong> and <strong>Move Down</strong> arrow controls on each image card. The top-left card becomes page 1, followed sequentially by each subsequent card. Once arranged, our in-browser engine compiles all pages into a cohesive multi-page PDF ready for instant download.</p>
+          </div>
+        </section>
+
+        <!-- Section 4: JPG to PDF Page Size Guide -->
+        <section id="page-size-guide" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">JPG to PDF Page Size Guide</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">Choose the page format that best fits how your PDF will be read, shared, or printed. Toolora provides three standard page geometry modes:</p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60">
+                  <th class="py-3 px-4 font-bold text-slate-900 dark:text-white">Page Size</th>
+                  <th class="py-3 px-4 font-bold text-slate-900 dark:text-white">Best For</th>
+                  <th class="py-3 px-4 font-bold text-slate-900 dark:text-white">Notes</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tr>
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white">A4</td>
+                  <td class="py-3 px-4 text-slate-600 dark:text-slate-400">General documents and international printing</td>
+                  <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Common international document format (210 × 297 mm / 595 × 842 pt)</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white">US Letter</td>
+                  <td class="py-3 px-4 text-slate-600 dark:text-slate-400">US-focused documents and printing</td>
+                  <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Common North American format (8.5 × 11 in / 612 × 792 pt)</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white">Fit to Image</td>
+                  <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Photos and images</td>
+                  <td class="py-3 px-4 text-slate-600 dark:text-slate-400">Uses image dimensions rather than forcing a standard paper size</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Orientation: Portrait vs. Landscape</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Select <strong>Portrait</strong> for standard vertical paperwork, letters, scanned notes, and phone-captured documents. Select <strong>Landscape</strong> for wide charts, spreadsheets, presentations, and landscape photography. When <em>Fit to Image</em> is selected, orientation is automatically matched to each image's native aspect ratio.</p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Margins: None, Small, and Standard</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Choose <strong>None (0 pt)</strong> for edge-to-edge full-bleed display without borders. Choose <strong>Small (20 pt)</strong> for clean, subtle white borders around photos. Choose <strong>Standard (40 pt)</strong> to provide generous margins that prevent text or graphics from being clipped by printer margins.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Convert Photos and Scanned Images to PDF -->
+        <section id="photos-scans-to-pdf" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Convert Photos and Scanned Images to PDF</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">Turning physical paper and camera photos into standardized digital PDF documents solves real day-to-day workflow needs:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Receipts &amp; Invoices</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Photograph paper receipts or expense bills with your phone and compile them into a single, organized monthly expense report PDF.</p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Assignments &amp; Coursework</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Photograph handwritten homework, notebook equations, diagrams, and project pages to submit a neat, multi-page document to instructors.</p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Forms &amp; Contracts</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Convert snapshots of signed agreements, lease papers, government notices, and paper certificates into standardized archival PDF files.</p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Documents Photographed with a Phone</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">High-resolution smartphone cameras can replace bulky flatbed scanners. Standardize your photo scans onto uniform A4 or Letter sheets in seconds.</p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Collections of Images</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Group collections of screenshots, property photos, design drafts, or event photos into an orderly document that opens cleanly on any operating system.</p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Meeting Notes &amp; Whiteboards</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">Capture whiteboard diagrams and meeting notes, arrange them chronologically, and distribute them to your team in a universal format.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 6: JPG to PDF on Mobile -->
+        <section id="jpg-to-pdf-mobile" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">JPG to PDF on Mobile</h2>
+          <div class="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm">
+            <p>Toolora is fully responsive and functions smoothly directly inside modern mobile web browsers, including Safari on iOS (iPhone and iPad) and Chrome on Android devices. You do not need to install an app from an app store or grant unnecessary device permissions to convert images to PDF.</p>
+            <p><strong>iPhone &amp; iPad Workflow (Safari):</strong> Tap the upload drop zone to select pictures directly from your Photo Library, take a live photo with your camera, or browse documents stored in iCloud Drive or the local Files app. Use the Move Up and Move Down arrow controls to sequence pages, then tap Generate PDF to save the file directly to your device Downloads or share it via AirDrop, Mail, or Messages.</p>
+            <p><strong>Android Workflow (Chrome):</strong> Tap browse files to select multiple photos from Google Photos or your local gallery. Configure your desired page dimensions and margins, compile the document in memory, and download the finished PDF directly to your device storage.</p>
+          </div>
+        </section>
+
+        <!-- Section 7: JPG to PDF Without Uploading Files -->
+        <section id="client-side-privacy" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">JPG to PDF Without Uploading Files</h2>
+          <div class="p-6 rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/30 dark:bg-emerald-950/10 space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+            <p>Traditional online file converters require you to send your photos over the Internet to remote conversion servers. For sensitive paperwork such as driver's licenses, passports, tax forms, financial statements, medical records, or confidential business proposals, uploading files to third-party servers presents understandable privacy concerns.</p>
+            <p>Toolora runs on a client-side architecture: image reading, bitmap embedding, Canvas conversion, and PDF file construction take place entirely within your browser memory using the open-source <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono text-xs">pdf-lib</code> engine.</p>
+            <p>Because file processing is performed locally on your device, your images do not need to be uploaded to a remote conversion server. This in-browser execution model provides enhanced privacy and avoids queue wait times.</p>
+          </div>
+        </section>
+
+        <!-- Section 8: Does JPG to PDF Reduce Image Quality? -->
+        <section id="image-quality-explained" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Does JPG to PDF Reduce Image Quality?</h2>
+          <div class="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm">
+            <p>No. When you compile pictures with Toolora, your JPG and JPEG files are embedded directly into the PDF structure using native JPEG stream embedding (<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono text-xs">embedJpg</code>). PNG files are embedded directly as native PNG streams (<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono text-xs">embedPng</code>). WebP and other supported image formats are converted to standard image buffers in browser memory and embedded without loss of resolution.</p>
+            <p>The converter embeds your original image bitmaps into vector page containers at their native resolution without applying lossy downsampling. Text outlines, handwriting, signatures, and photographic colors retain their original fidelity.</p>
+            <p><strong>Important Note on File Size:</strong> This tool does not provide an image compression or downsampling control. Converting images to PDF does not automatically make the file smaller. If you upload multiple uncompressed camera photos (for instance, five 6MB photos), the resulting PDF will naturally be approximately 30MB in size.</p>
+          </div>
+        </section>
+
+        <!-- Section 9: How to Make a JPG-to-PDF File Smaller -->
+        <section id="make-pdf-smaller" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">How to Make a JPG-to-PDF File Smaller</h2>
+          <div class="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm">
+            <p>Because this converter is designed for document compilation rather than aggressive image compression, large source images will produce a proportionally large PDF. If your finished document needs to fit under email attachment limits or submission portal caps, you can optimize your file size using Toolora's dedicated tools:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+              <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">1. Compress Images First</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">Optimize high-resolution JPG, PNG, and WebP pictures before compiling them into a document.</p>
+                <a href="/tools/image-compressor" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1">Free Image Compressor &rarr;</a>
+              </div>
+              <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">2. Downscale Large Photo Dimensions</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">Modern phone photos are often 4,000+ pixels wide. Resize them to standard document dimensions to save megabytes.</p>
+                <a href="/tools/image-resizer" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1">Resize an Image Online &rarr;</a>
+              </div>
+              <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">3. Compress the Finished PDF</h3>
+                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3 leading-relaxed">If your PDF has already been generated, optimize redundant internal structures and streams with our PDF compressor.</p>
+                <a href="/tools/pdf-compressor" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1">Free PDF Compressor &rarr;</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 10: Why use Toolora's JPG to PDF? -->
+        <section id="why-use-toolora" class="mb-12">
+          <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Why use Toolora's ${escapeHtml(tool.name)}?</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            ${(tool.whyUseDetailed || []).map((b) => `
+              <div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">${escapeHtml(b.title)}</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">${escapeHtml(b.description)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- Section 11: Frequently Asked Questions -->
+        <section id="faq" class="mb-12">
+          <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Frequently Asked Questions</h2>
+          <div class="space-y-4">
+            ${tool.faqs.map((f) => `
+              <div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-2">${escapeHtml(f.question)}</h3>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">${escapeHtml(f.answer)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- Section 12: Related Online Tools -->
+        <section id="related-tools" class="mb-12">
+          <h2 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white">Related Online Tools</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Explore complementary utilities that pair seamlessly with ${escapeHtml(tool.name)}.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            ${(tool.relatedLinks || []).map((link) => `
+              <a href="/tools/${link.slug}" class="block p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 hover:border-indigo-500 transition group">
+                <h3 class="text-base font-bold text-indigo-600 dark:text-indigo-400 group-hover:underline mb-1">${escapeHtml(link.anchorText)}</h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">${escapeHtml(link.description)}</p>
+              </a>
+            `).join('')}
+          </div>
+        </section>
+      `;
     } else if (tool) {
       mainContent = `
         <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
@@ -1284,10 +1576,19 @@ function generateHtmlForRoute(templateHtml: string, route: RouteSeo): string {
 
     const scriptTag = `<script id="dynamic-json-ld" type="application/ld+json">${JSON.stringify(payload)}</script>`;
 
-    html = html.replace(
-      /<script\s+type="application\/ld\+json">[\s\S]*?<\/script>/i,
-      scriptTag
-    );
+    if (/<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/i.test(html)) {
+      html = html.replace(
+        /<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/i,
+        scriptTag
+      );
+    } else if (/<script[^>]*id=["']dynamic-json-ld["'][^>]*>[\s\S]*?<\/script>/i.test(html)) {
+      html = html.replace(
+        /<script[^>]*id=["']dynamic-json-ld["'][^>]*>[\s\S]*?<\/script>/i,
+        scriptTag
+      );
+    } else {
+      html = html.replace('</head>', `  ${scriptTag}\n</head>`);
+    }
   }
 
   // 7. Inject pre-rendered semantic body inside <div id="root"> so search crawlers and lynx/curl get full content & visible H1

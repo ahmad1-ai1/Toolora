@@ -324,8 +324,8 @@ export const TOOLS: ToolMetadata[] = [
     ],
     whyUseDetailed: [
       {
-        title: 'Drag-and-Drop Page Sequencing',
-        description: 'Easily rearrange the visual sequence of your pages with intuitive ordering controls so your multi-page PDF reads in the exact intended order.',
+        title: 'Easy Page Ordering',
+        description: 'Arrange the visual sequence of your pages with intuitive Move Up and Move Down arrow controls on each image card so your multi-page PDF reads in the exact intended order.',
       },
       {
         title: 'Custom Page Formats & Margins',
@@ -342,17 +342,17 @@ export const TOOLS: ToolMetadata[] = [
     ],
     features: [
       'Batch upload multiple JPG, PNG, and WebP images simultaneously',
-      'Intuitive page reordering controls for custom document flow',
+      'Intuitive Move Up / Move Down page reordering controls for custom document flow',
       'Selectable page format standards: A4, US Letter, or Fit to Image',
       'Configurable page margins: None, Small, or Standard',
       'Pure client-side conversion for complete document privacy',
       'Fast compilation with instant single-click PDF download',
     ],
     howToSteps: [
-      'Upload your images by dragging them into the drop zone or browsing your local files.',
-      'Use the reorder arrows to arrange your image pages in your desired sequence.',
-      'Select your preferred page format (A4, US Letter, or Fit to Image) and margin spacing.',
-      'Click "Convert to PDF" to compile your document and download the finished PDF file instantly.',
+      'Add your JPG, PNG, or WebP images by dragging them into the drop zone or browsing your device files.',
+      'Arrange the pages using the available Move Up / Move Down controls on each image card.',
+      'Choose page size (A4, US Letter, or Fit to Image), orientation, and margins.',
+      'Click "Generate PDF" to assemble your document in browser memory, then download the finished PDF.',
     ],
     whyUse: [
       'Organized Documentation: Merge multiple scattered image files into a single, clean, shareable document.',
@@ -361,42 +361,67 @@ export const TOOLS: ToolMetadata[] = [
     ],
     faqs: [
       {
-        question: 'Can I combine multiple different image formats into the same PDF?',
-        answer: 'Yes. You can upload a mixture of JPG, JPEG, PNG, and WebP files in a single session. Toolora converts and compiles all of them into one unified PDF document.',
+        question: 'Can I combine multiple JPGs into one PDF?',
+        answer: 'Yes. You can upload multiple JPG, JPEG, PNG, and WebP images at once. Toolora compiles all your uploaded pictures into a single, cohesive multi-page PDF document in the sequence you specify.',
       },
       {
-        question: 'How do I rearrange the order of pages before creating the PDF?',
-        answer: 'Each uploaded image card features left and right arrow buttons. Simply click them to shift pages into your desired chronological or logical order before clicking convert.',
+        question: 'Can I mix JPG, PNG, and WebP files?',
+        answer: 'Yes. You can mix and match JPG, JPEG, PNG, and WebP files in a single conversion session. The engine automatically handles format differences in browser memory and embeds each image into your document.',
       },
       {
-        question: 'Will converting images to PDF reduce their visual sharpness?',
-        answer: 'No. The converter embeds your original image bitmaps directly into vector page containers at their native resolution, ensuring crisp reproduction on screen and in print.',
+        question: 'How do I change page order?',
+        answer: 'Each uploaded image card in the gallery displays vertical Move Up and Move Down arrow buttons. Click Move Up to shift an image earlier in the document or Move Down to shift it later. Top-to-bottom and left-to-right order corresponds to page 1 through the final page.',
       },
       {
-        question: 'What page format should I choose for standard printing?',
-        answer: 'In Europe, Asia, and international jurisdictions, A4 is the universal standard. In North America (United States and Canada), US Letter is recommended. Choose "Fit to Image" if you want the PDF pages to match the exact aspect ratios of your source photos.',
+        question: 'What is the best page size for printing?',
+        answer: 'For standard printing in international regions (Europe, Asia, Latin America, Australia, Africa), choose A4. In North America (United States and Canada), choose US Letter. If you want pages to match your images without white letterbox borders, choose Fit to Image.',
       },
       {
-        question: 'Is there a limit on how many images I can convert at once?',
-        answer: 'There is no artificial limit imposed by Toolora. You can convert dozens of images simultaneously, bounded only by your device memory and processing speed.',
+        question: 'What is the difference between A4 and US Letter?',
+        answer: 'A4 is the international standard paper size measuring 210 × 297 mm (595 × 842 points). US Letter is the North American standard measuring 8.5 × 11 inches (612 × 792 points). A4 is slightly narrower and taller, while US Letter is slightly wider and shorter.',
+      },
+      {
+        question: 'Can I convert photos to PDF on mobile?',
+        answer: 'Yes. Toolora works directly inside modern mobile browsers such as Safari on iOS and Chrome on Android. You can select photos from your phone gallery or files app, arrange page order, and generate a PDF without installing any app.',
+      },
+      {
+        question: 'Does JPG to PDF reduce image quality?',
+        answer: 'No. Toolora embeds original JPG and PNG image bitmaps directly into vector page containers at their native resolution without applying lossy downsampling. Text, lines, and photo details retain their original clarity.',
+      },
+      {
+        question: 'Does this tool compress the images?',
+        answer: 'No. This tool is designed for document compilation and page layout, not image compression. It does not provide image downsampling or compression quality controls. If you upload large high-resolution photos, the resulting PDF file size will reflect the total size of those source images.',
+      },
+      {
+        question: 'Can I make the resulting PDF smaller?',
+        answer: 'Yes. If your finished PDF exceeds file size limits for email or online portals, you can optimize individual photos before converting using our Free Image Compressor or Image Resizer, or compress the compiled document afterward using our Free PDF Compressor.',
+      },
+      {
+        question: 'Are my images uploaded to a server?',
+        answer: 'No. All image processing and PDF compilation take place locally within your web browser memory using pdf-lib and HTML5 Canvas. Your photos and documents are never transmitted to our servers or stored in any database.',
       },
     ],
-    relatedToolSlugs: ['pdf-to-jpg', 'pdf-compressor', 'image-compressor'],
+    relatedToolSlugs: ['image-compressor', 'image-resizer', 'pdf-compressor', 'pdf-to-jpg'],
     relatedLinks: [
       {
-        slug: 'pdf-to-jpg',
-        anchorText: 'PDF to JPG Converter',
-        description: 'Extract PDF document pages back into individual image files.',
+        slug: 'image-compressor',
+        anchorText: 'Free Image Compressor',
+        description: 'Reduce the file size of JPG, PNG, and WebP pictures before combining them into a PDF.',
+      },
+      {
+        slug: 'image-resizer',
+        anchorText: 'Resize an Image Online',
+        description: 'Scale down pixel dimensions and resolutions to help meet document file size requirements.',
       },
       {
         slug: 'pdf-compressor',
         anchorText: 'Free PDF Compressor',
-        description: 'Optimize and shrink the resulting PDF document for smaller file size.',
+        description: 'Shrink and optimize the file size of your finished multi-page PDF document.',
       },
       {
-        slug: 'image-compressor',
-        anchorText: 'Free Image Compressor',
-        description: 'Compress individual photos before compiling them into a document.',
+        slug: 'pdf-to-jpg',
+        anchorText: 'PDF to JPG Converter',
+        description: 'Extract pages from an existing PDF back into separate high-resolution image files.',
       },
     ],
   },

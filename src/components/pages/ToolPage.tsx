@@ -124,29 +124,60 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
     },
   };
 
+  const categoryLabel = tool.category === 'pdf' ? 'PDF Tools' : categoryInfo ? categoryInfo.name : 'Tools';
+  const categoryPath = categoryInfo ? `/category/${categoryInfo.id}` : '/tools';
+
   const breadcrumbSchema = {
     '@type': 'BreadcrumbList',
     '@id': `${canonicalUrl}#breadcrumb`,
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: `${SITE_URL}/`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Tools',
-        item: `${SITE_URL}/tools`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: tool.name,
-        item: canonicalUrl,
-      },
-    ],
+    itemListElement:
+      tool.slug === 'image-compressor' || tool.slug === 'pdf-compressor'
+        ? [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: `${SITE_URL}/`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: 'Tools',
+              item: `${SITE_URL}/tools`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: tool.name,
+              item: canonicalUrl,
+            },
+          ]
+        : [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: 'Home',
+              item: `${SITE_URL}/`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: 'Tools',
+              item: `${SITE_URL}/tools`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: categoryLabel,
+              item: `${SITE_URL}${categoryPath}`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 4,
+              name: tool.name,
+              item: canonicalUrl,
+            },
+          ],
   };
 
   const howToSchema =
@@ -218,6 +249,40 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
             },
           ],
         }
+      : tool.slug === 'jpg-to-pdf'
+      ? {
+          '@type': 'HowTo',
+          '@id': `${canonicalUrl}#howto`,
+          name: 'How to Convert JPG to PDF Online',
+          description:
+            'Step-by-step guide to converting and combining JPG, PNG, and WebP images into a single PDF document online for free using Toolora.',
+          step: [
+            {
+              '@type': 'HowToStep',
+              position: 1,
+              name: 'Add your JPG, PNG, or WebP images',
+              text: 'Add your JPG, PNG, or WebP images by dragging them into the drop zone or browsing your device files.',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 2,
+              name: 'Arrange the pages using the available Move Up / Move Down controls',
+              text: 'Arrange the pages using the available Move Up / Move Down controls on each image card.',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 3,
+              name: 'Choose page size, orientation, and margins',
+              text: 'Choose page size (A4, US Letter, or Fit to Image), orientation, and margins.',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 4,
+              name: 'Create and download the PDF',
+              text: 'Click "Generate PDF" to assemble your document in browser memory, then download the finished PDF.',
+            },
+          ],
+        }
       : null;
 
   const faqSchema = {
@@ -242,8 +307,8 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
       : [
           { label: 'Tools', href: '/tools' },
           {
-            label: categoryInfo ? categoryInfo.name : 'Category',
-            href: categoryInfo ? `/category/${categoryInfo.id}` : '/tools',
+            label: categoryLabel,
+            href: categoryPath,
           },
           { label: tool.name },
         ];
@@ -363,6 +428,10 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
             {tool.slug === 'image-compressor'
               ? 'How to Compress an Image Online'
+              : tool.slug === 'pdf-compressor'
+              ? 'How to Compress a PDF Online'
+              : tool.slug === 'jpg-to-pdf'
+              ? 'How to Convert JPG to PDF Online'
               : `How to use ${tool.name}`}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -881,6 +950,276 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
           </section>
         )}
 
+        {/* JPG TO PDF SPECIALIZED SECTIONS */}
+        {tool.slug === 'jpg-to-pdf' && (
+          <div className="space-y-8">
+            {/* 1. Convert Multiple JPGs into One PDF */}
+            <section
+              id="multiple-jpg-to-pdf"
+              className={`p-6 sm:p-8 rounded-3xl border ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Convert Multiple JPGs into One PDF
+              </h2>
+              <div className="space-y-3.5 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                <p>
+                  Whether compiling a multi-page school assignment, a contract draft, or a batch of photo receipts, Toolora makes it easy to <strong>convert multiple JPGs into one PDF</strong> file. You can select single photos or batch-upload dozens of images simultaneously using our drag-and-drop zone or device file browser.
+                </p>
+                <p>
+                  Our tool supports mixed format batches: you can combine JPG, JPEG, PNG, and WebP files into the same PDF document without converting them beforehand. Each photo is rendered into its own page card displaying a thumbnail preview, file name, and dimensions.
+                </p>
+                <p>
+                  To ensure your document flows in the intended sequence, use the vertical <strong>Move Up</strong> and <strong>Move Down</strong> arrow controls on each image card. The top-left card becomes page 1, followed sequentially by each subsequent card. Once arranged, our in-browser engine compiles all pages into a cohesive multi-page PDF ready for instant download.
+                </p>
+              </div>
+            </section>
+
+            {/* 2. JPG to PDF Page Size Guide */}
+            <section
+              id="page-size-guide"
+              className={`p-6 sm:p-8 rounded-3xl border ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                JPG to PDF Page Size Guide
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                Choose the page format that best fits how your PDF will be read, shared, or printed. Toolora provides three standard page geometry modes:
+              </p>
+
+              <div className="overflow-x-auto mb-6">
+                <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                  <thead>
+                    <tr className={`border-b ${isDark ? 'border-gray-800 bg-[#141720]' : 'border-gray-200 bg-gray-50'}`}>
+                      <th className="py-3 px-4 font-bold text-gray-900 dark:text-white">Page Size</th>
+                      <th className="py-3 px-4 font-bold text-gray-900 dark:text-white">Best For</th>
+                      <th className="py-3 px-4 font-bold text-gray-900 dark:text-white">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody className={`divide-y ${isDark ? 'divide-gray-800' : 'divide-gray-200'}`}>
+                    <tr>
+                      <td className="py-3 px-4 font-semibold text-gray-900 dark:text-white">A4</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300">General documents and international printing</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Common international document format (210 × 297 mm / 595 × 842 pt)</td>
+                    </tr>
+                    <tr>
+                      <td className="py-3 px-4 font-semibold text-gray-900 dark:text-white">US Letter</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300">US-focused documents and printing</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Common North American format (8.5 × 11 in / 612 × 792 pt)</td>
+                    </tr>
+                    <tr>
+                      <td className="py-3 px-4 font-semibold text-gray-900 dark:text-white">Fit to Image</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Photos and images</td>
+                      <td className="py-3 px-4 text-gray-600 dark:text-gray-300">Uses image dimensions rather than forcing a standard paper size</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">Orientation: Portrait vs. Landscape</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Select <strong>Portrait</strong> for standard vertical paperwork, letters, scanned notes, and phone-captured documents. Select <strong>Landscape</strong> for wide charts, spreadsheets, presentations, and landscape photography. When <em>Fit to Image</em> is selected, orientation is automatically matched to each image's native aspect ratio.
+                  </p>
+                </div>
+                <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">Margins: None, Small, and Standard</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Choose <strong>None (0 pt)</strong> for edge-to-edge full-bleed display without borders. Choose <strong>Small (20 pt)</strong> for clean, subtle white borders around photos. Choose <strong>Standard (40 pt)</strong> to provide generous margins that prevent text or graphics from being clipped by printer margins.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* 3. Convert Photos and Scanned Images to PDF */}
+            <section
+              id="photos-scans-to-pdf"
+              className={`p-6 sm:p-8 rounded-3xl border ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Convert Photos and Scanned Images to PDF
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                Turning physical paper and camera photos into standardized digital PDF documents solves real day-to-day workflow needs:
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">Receipts &amp; Invoices</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Photograph paper receipts or expense bills with your phone and compile them into a single, organized monthly expense report PDF.
+                  </p>
+                </div>
+                <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">Assignments &amp; Coursework</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Photograph handwritten homework, notebook equations, diagrams, and project pages to submit a neat, multi-page document to instructors.
+                  </p>
+                </div>
+                <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">Forms &amp; Contracts</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Convert snapshots of signed agreements, lease papers, government notices, and paper certificates into standardized archival PDF files.
+                  </p>
+                </div>
+                <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">Documents Photographed with a Phone</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    High-resolution smartphone cameras can replace bulky flatbed scanners. Standardize your photo scans onto uniform A4 or Letter sheets in seconds.
+                  </p>
+                </div>
+                <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">Collections of Images</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Group collections of screenshots, property photos, design drafts, or event photos into an orderly document that opens cleanly on any operating system.
+                  </p>
+                </div>
+                <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">Meeting Notes &amp; Whiteboards</h3>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Capture whiteboard diagrams and meeting notes, arrange them chronologically, and distribute them to your team in a universal format.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            {/* 4. JPG to PDF on Mobile */}
+            <section
+              id="jpg-to-pdf-mobile"
+              className={`p-6 sm:p-8 rounded-3xl border ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                JPG to PDF on Mobile
+              </h2>
+              <div className="space-y-3.5 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                <p>
+                  Toolora is fully responsive and functions smoothly directly inside modern mobile web browsers, including Safari on iOS (iPhone and iPad) and Chrome on Android devices. You do not need to install an app from an app store or grant unnecessary device permissions to convert images to PDF.
+                </p>
+                <p>
+                  <strong>iPhone &amp; iPad Workflow (Safari):</strong> Tap the upload drop zone to select pictures directly from your Photo Library, take a live photo with your camera, or browse documents stored in iCloud Drive or the local Files app. Use the Move Up and Move Down arrow controls to sequence pages, then tap Generate PDF to save the file directly to your device Downloads or share it via AirDrop, Mail, or Messages.
+                </p>
+                <p>
+                  <strong>Android Workflow (Chrome):</strong> Tap browse files to select multiple photos from Google Photos or your local gallery. Configure your desired page dimensions and margins, compile the document in memory, and download the finished PDF directly to your device storage.
+                </p>
+              </div>
+            </section>
+
+            {/* 5. Client-Side Privacy */}
+            <section
+              id="client-side-privacy"
+              className={`p-6 sm:p-8 rounded-3xl border ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                JPG to PDF Without Uploading Files
+              </h2>
+              <div className="p-6 rounded-2xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/30 dark:bg-emerald-950/10 space-y-3.5 text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                <p>
+                  Traditional online file converters require you to send your photos over the Internet to remote conversion servers. For sensitive paperwork such as driver's licenses, passports, tax forms, financial statements, medical records, or confidential business proposals, uploading files to third-party servers presents understandable privacy concerns.
+                </p>
+                <p>
+                  Toolora runs on a client-side architecture: image reading, bitmap embedding, Canvas conversion, and PDF file construction take place entirely within your browser memory using the open-source <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-indigo-500 text-xs font-mono">pdf-lib</code> engine.
+                </p>
+                <p>
+                  Because file processing is performed locally on your device, your images do not need to be uploaded to a remote conversion server. This in-browser execution model provides enhanced privacy and avoids queue wait times.
+                </p>
+              </div>
+            </section>
+
+            {/* 6. Image Quality & Compression */}
+            <section
+              id="image-quality-explained"
+              className={`p-6 sm:p-8 rounded-3xl border ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Does JPG to PDF Reduce Image Quality?
+              </h2>
+              <div className="space-y-3.5 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                <p>
+                  No. When you compile pictures with Toolora, your JPG and JPEG files are embedded directly into the PDF structure using native JPEG stream embedding (<code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-indigo-500 text-xs font-mono">embedJpg</code>). PNG files are embedded directly as native PNG streams (<code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-indigo-500 text-xs font-mono">embedPng</code>). WebP and other supported image formats are converted to standard image buffers in browser memory and embedded without loss of resolution.
+                </p>
+                <p>
+                  The converter embeds your original image bitmaps into vector page containers at their native resolution without applying lossy downsampling. Text outlines, handwriting, signatures, and photographic colors retain their original fidelity.
+                </p>
+                <p>
+                  <strong>Important Note on File Size:</strong> This tool does not provide an image compression or downsampling control. Converting images to PDF does not automatically make the file smaller. If you upload multiple uncompressed camera photos (for instance, five 6MB photos), the resulting PDF will naturally be approximately 30MB in size.
+                </p>
+              </div>
+            </section>
+
+            {/* 7. How to Make a JPG-to-PDF File Smaller */}
+            <section
+              id="make-pdf-smaller"
+              className={`p-6 sm:p-8 rounded-3xl border ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                How to Make a JPG-to-PDF File Smaller
+              </h2>
+              <div className="space-y-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                <p>
+                  Because this converter is designed for document compilation rather than aggressive image compression, large source images will produce a proportionally large PDF. If your finished document needs to fit under email attachment limits or submission portal caps, you can optimize your file size using Toolora's dedicated tools:
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                  <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                    <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">1. Compress Images First</h3>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 mb-3 leading-relaxed">
+                      Optimize high-resolution JPG, PNG, and WebP pictures before compiling them into a document.
+                    </p>
+                    <Link
+                      href="/tools/image-compressor"
+                      className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>Free Image Compressor</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+
+                  <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                    <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">2. Downscale Large Photo Dimensions</h3>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 mb-3 leading-relaxed">
+                      Modern phone photos are often 4,000+ pixels wide. Resize them to standard document dimensions to save megabytes.
+                    </p>
+                    <Link
+                      href="/tools/image-resizer"
+                      className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>Resize an Image Online</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+
+                  <div className={`p-5 rounded-2xl border ${isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'}`}>
+                    <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">3. Compress the Finished PDF</h3>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 mb-3 leading-relaxed">
+                      If your PDF has already been generated, optimize redundant internal structures and streams with our PDF compressor.
+                    </p>
+                    <Link
+                      href="/tools/pdf-compressor"
+                      className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>Free PDF Compressor</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
         {/* SEO SECTION 3: Why use Toolora's [Tool Name]? */}
         <section
           id="why-use-toolora"
@@ -1083,7 +1422,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
 
           {/* Descriptive Contextual Links */}
           {tool.relatedLinks && tool.relatedLinks.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className={`grid grid-cols-1 sm:grid-cols-2 ${tool.relatedLinks.length === 4 ? 'lg:grid-cols-4' : 'md:grid-cols-3'} gap-3`}>
               {tool.relatedLinks.map((link, idx) => (
                 <Link
                   key={idx}
