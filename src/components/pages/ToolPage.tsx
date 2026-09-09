@@ -149,6 +149,42 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
     ],
   };
 
+  const howToSchema =
+    tool.slug === 'image-compressor'
+      ? {
+          '@type': 'HowTo',
+          '@id': `${canonicalUrl}#howto`,
+          name: 'How to Compress an Image Online',
+          description: 'Step-by-step guide to compressing JPG, PNG, and WebP images online for free using Toolora.',
+          step: [
+            {
+              '@type': 'HowToStep',
+              position: 1,
+              name: 'Upload or select an image',
+              text: 'Drag and drop your JPG, PNG, or WebP picture into the upload box, or click browse files to select an image from your computer or mobile phone.',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 2,
+              name: 'Adjust compression settings',
+              text: 'Use the interactive quality slider between 10% and 100% to find your ideal balance between file size reduction and visual clarity.',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 3,
+              name: 'Preview and check resulting file size',
+              text: 'Review the real-time calculated output file size in kilobytes (KB) and savings percentage alongside the visual preview.',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 4,
+              name: 'Download the compressed image',
+              text: 'Click the "Download Compressed Image" button to immediately save your optimized file directly to your device storage.',
+            },
+          ],
+        }
+      : null;
+
   const faqSchema = {
     '@type': 'FAQPage',
     '@id': `${canonicalUrl}#faq`,
@@ -162,6 +198,21 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
     })),
   };
 
+  const breadcrumbItems =
+    tool.slug === 'image-compressor'
+      ? [
+          { label: 'Tools', href: '/tools' },
+          { label: tool.name },
+        ]
+      : [
+          { label: 'Tools', href: '/tools' },
+          {
+            label: categoryInfo ? categoryInfo.name : 'Category',
+            href: categoryInfo ? `/category/${categoryInfo.id}` : '/tools',
+          },
+          { label: tool.name },
+        ];
+
   return (
     <div className="min-h-screen py-6 sm:py-10">
       {/* Dynamic SEO Head with canonical, meta, and JSON-LD */}
@@ -169,22 +220,19 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
         title={tool.seoTitle}
         description={tool.metaDescription}
         path={canonicalPath}
-        structuredData={[webAppSchema, breadcrumbSchema, faqSchema]}
+        ogType="website"
+        structuredData={[
+          webAppSchema,
+          breadcrumbSchema,
+          ...(howToSchema ? [howToSchema] : []),
+          faqSchema,
+        ]}
       />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Navigation Breadcrumbs (Semantic HTML) */}
         <div className="flex items-center justify-between">
-          <Breadcrumbs
-            items={[
-              { label: 'Tools', href: '/tools' },
-              {
-                label: categoryInfo ? categoryInfo.name : 'Category',
-                href: categoryInfo ? `/category/${categoryInfo.id}` : '/tools',
-              },
-              { label: tool.name },
-            ]}
-          />
+          <Breadcrumbs items={breadcrumbItems} />
 
           <button
             onClick={handleShare}
@@ -278,7 +326,9 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
           }`}
         >
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
-            How to use {tool.name}
+            {tool.slug === 'image-compressor'
+              ? 'How to Compress an Image Online'
+              : `How to use ${tool.name}`}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {tool.howToSteps.map((step, idx) => (
@@ -298,6 +348,248 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
             ))}
           </div>
         </section>
+
+        {/* IMAGE COMPRESSOR SPECIALIZED SECTION: Target File Size Guide */}
+        {tool.slug === 'image-compressor' && (
+          <section
+            id="target-file-size"
+            className={`p-6 sm:p-8 rounded-3xl border ${
+              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+            }`}
+          >
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Compress Images to a Specific File Size
+            </h2>
+            <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
+              Whether you are submitting documents to an official job or visa application portal, attaching assets to an email, or optimizing images for web performance, you often need to reduce image size in KB to satisfy strict file size caps. Because compression algorithms analyze color variance, high-frequency textures, and original pixel dimensions, no single quality setting will produce an identical file size across different photos. However, you can easily hit common thresholds like 200KB, 100KB, or 50KB by using a systematic approach.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div
+                className={`p-5 rounded-2xl border flex flex-col justify-between ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+                      Compress Photo to 50KB or 20KB
+                    </h3>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                      Portals & Visas
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                    Strict caps between 20KB and 50KB are customary for passport pictures, visa applications, digital signatures, and government exam upload forms. Because camera sensors record photos at 12 to 48 megapixels (often 4MB to 10MB), compressing a photo to 50KB through compression quality alone may cause severe blurriness.
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-gray-200 dark:border-gray-800">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <strong className="text-gray-900 dark:text-white">Practical method:</strong> First scale down pixel dimensions (for example, to 600×600 or 800×600 pixels) using our{' '}
+                    <Link
+                      href="/tools/image-resizer"
+                      className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+                    >
+                      Resize an image online
+                    </Link>{' '}
+                    tool. Then select JPG or WebP format with quality set between 55% and 65% until your file satisfies the required limit.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border flex flex-col justify-between ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+                      Compress Image to 100KB
+                    </h3>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-500 border border-blue-500/20">
+                      Web & Newsletters
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                    A 100KB limit is the most popular benchmark for email newsletter headers, blog thumbnail graphics, and customer support ticket attachments. This target maintains vibrant colors without bloating inbox transfer sizes.
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-gray-200 dark:border-gray-800">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <strong className="text-gray-900 dark:text-white">Practical method:</strong> Upload your picture and adjust the quality slider to around 70%–75%. If your file remains slightly above 100KB, nudge the quality slider down in 5% increments or moderately trim excess pixel dimensions.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border flex flex-col justify-between ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+                      Compress Image to 200KB
+                    </h3>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                      Hero Banners & Storefronts
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                    Webmasters and e-commerce designers regularly aim to compress image to 200KB for full-width website hero banners, landing page illustrations, and product zoom galleries. This delivers a crisp visual presentation on high-DPI Retina screens while comfortably passing Google Core Web Vitals Largest Contentful Paint (LCP) performance audits.
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-gray-200 dark:border-gray-800">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <strong className="text-gray-900 dark:text-white">Practical method:</strong> Select 80%–85% quality in JPG or WebP mode. For standard 1920×1080 web images, this easily reduces raw camera files from 5MB down to approximately 150KB–200KB.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border flex flex-col justify-between ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+                      500KB to 1MB Targets
+                    </h3>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-500 border border-purple-500/20">
+                      Portfolios & Prints
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                    For architectural galleries, photography lookbooks, client proof sheets, and presentation decks, retaining fine textures and smooth gradients is critical.
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-gray-200 dark:border-gray-800">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                    <strong className="text-gray-900 dark:text-white">Practical method:</strong> Set the quality slider to 90% in JPG or WebP. This preserves near-lossless pixel fidelity while stripping bloated EXIF camera metadata and color profiles.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className={`p-5 rounded-2xl border ${
+                isDark ? 'bg-[#141720] border-[#222733]' : 'bg-indigo-50/50 border-indigo-100'
+              }`}
+            >
+              <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">
+                Practical Steps for Hitting an Exact File Size Target
+              </h3>
+              <ol className="list-decimal list-inside space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
+                <li>
+                  <strong>Choose JPG or WebP for photographs:</strong> Avoid raw PNG for photographs because PNG uses lossless compression, producing files 3x to 5x larger than JPG.
+                </li>
+                <li>
+                  <strong>Reduce image dimensions when needed:</strong> If starting from a high-resolution camera photo (e.g. 4000px wide), downsize dimensions first using our{' '}
+                  <Link
+                    href="/tools/image-resizer"
+                    className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+                  >
+                    Free Image Resizer
+                  </Link>.
+                </li>
+                <li>
+                  <strong>Lower compression quality gradually:</strong> Adjust the slider in 5% to 10% increments rather than jumping directly to the lowest value.
+                </li>
+                <li>
+                  <strong>Check resulting file size:</strong> Examine the real-time calculated size badge and repeat until the required KB ceiling is reached.
+                </li>
+              </ol>
+            </div>
+          </section>
+        )}
+
+        {/* IMAGE COMPRESSOR SPECIALIZED SECTION: Format Comparison Table */}
+        {tool.slug === 'image-compressor' && (
+          <section
+            id="format-comparison"
+            className={`p-6 sm:p-8 rounded-3xl border ${
+              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+            }`}
+          >
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
+              JPG vs PNG vs WebP: Which Format Should You Use?
+            </h2>
+            <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300 mb-6">
+              Selecting the appropriate image format is just as important as adjusting the compression slider. Each format relies on distinct encoding algorithms tailored for specific image types and web use cases.
+            </p>
+
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-left text-xs sm:text-sm border-collapse">
+                <thead>
+                  <tr
+                    className={`border-b ${
+                      isDark ? 'border-gray-800 text-gray-300' : 'border-gray-200 text-gray-700'
+                    }`}
+                  >
+                    <th className="py-3 px-3 sm:px-4 font-bold">Format</th>
+                    <th className="py-3 px-3 sm:px-4 font-bold">Best For</th>
+                    <th className="py-3 px-3 sm:px-4 font-bold">Compression</th>
+                    <th className="py-3 px-3 sm:px-4 font-bold">Transparency</th>
+                    <th className="py-3 px-3 sm:px-4 font-bold">Typical Use</th>
+                  </tr>
+                </thead>
+                <tbody
+                  className={`divide-y ${
+                    isDark ? 'divide-gray-800 text-gray-400' : 'divide-gray-100 text-gray-600'
+                  }`}
+                >
+                  <tr>
+                    <td className="py-3 px-3 sm:px-4 font-semibold text-gray-900 dark:text-white">
+                      JPG / JPEG
+                    </td>
+                    <td className="py-3 px-3 sm:px-4">Photographs & complex scenery</td>
+                    <td className="py-3 px-3 sm:px-4">Lossy (discrete cosine transform)</td>
+                    <td className="py-3 px-3 sm:px-4">No (fills with solid white)</td>
+                    <td className="py-3 px-3 sm:px-4">
+                      Web articles, camera photos, social media uploads, email attachments
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-3 sm:px-4 font-semibold text-gray-900 dark:text-white">
+                      PNG
+                    </td>
+                    <td className="py-3 px-3 sm:px-4">Logos, icons, text & screenshots</td>
+                    <td className="py-3 px-3 sm:px-4">Lossless (DEFLATE algorithm)</td>
+                    <td className="py-3 px-3 sm:px-4">Yes (full alpha channel)</td>
+                    <td className="py-3 px-3 sm:px-4">
+                      Brand logos, transparent website assets, UI mockups, infographics
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-3 sm:px-4 font-semibold text-gray-900 dark:text-white">
+                      WebP
+                    </td>
+                    <td className="py-3 px-3 sm:px-4">Modern web publishing & Core Web Vitals</td>
+                    <td className="py-3 px-3 sm:px-4">Lossy & Lossless options</td>
+                    <td className="py-3 px-3 sm:px-4">Yes (in lossy and lossless)</td>
+                    <td className="py-3 px-3 sm:px-4">
+                      High-speed websites, e-commerce storefronts, progressive web apps
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="space-y-3.5 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p>
+                <strong className="text-gray-900 dark:text-white">When to choose JPG:</strong> JPG is generally suitable for photographs and continuous-tone imagery because gradual color transitions compress efficiently without conspicuous visual artifacts. Note that JPG does not support alpha transparency; transparent areas are filled with solid white during export.
+              </p>
+              <p>
+                <strong className="text-gray-900 dark:text-white">When to choose PNG:</strong> PNG is useful when transparency or lossless quality matters. Company emblems, transparent navigation badges, and screenshots containing crisp text stay sharp without blurry compression halos. However, saving photographic imagery as PNG results in substantially heavier file sizes.
+              </p>
+              <p>
+                <strong className="text-gray-900 dark:text-white">When to choose WebP:</strong> Developed by Google, WebP can provide efficient compression for supported web workflows, reducing file sizes by 25%–35% compared to JPG at equivalent perceptual quality while supporting transparency. Although universally supported in contemporary web browsers, some legacy image viewers or specialized document submission portals still mandate traditional JPG or PNG files.
+              </p>
+            </div>
+          </section>
+        )}
 
         {/* SEO SECTION 3: Why use Toolora's [Tool Name]? */}
         <section
@@ -349,6 +641,41 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
             )}
           </div>
         </section>
+
+        {/* IMAGE COMPRESSOR SPECIALIZED SECTION: Client-Side Privacy & In-Browser Processing */}
+        {tool.slug === 'image-compressor' && (
+          <section
+            id="privacy-security"
+            className={`p-6 sm:p-8 rounded-3xl border ${
+              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+            }`}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+                  Client-Side Privacy & In-Browser Processing
+                </h2>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  How Toolora safeguards your private photos and scanned documents.
+                </p>
+              </div>
+            </div>
+            <div className="space-y-3.5 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p>
+                Conventional online converters upload your personal files over public networks to remote web servers, where pictures are queued, compressed, and stored in temporary cloud buckets. This model introduces latency and potential data privacy concerns.
+              </p>
+              <p>
+                Toolora operates on a purely client-side architecture: when you select an image, it is decoded into local memory inside your web browser via standard HTML5 Canvas APIs (<code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-indigo-500 text-xs font-mono">drawImage</code> and <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-indigo-500 text-xs font-mono">toBlob</code>). Compression is calculated using your device's own hardware resources.
+              </p>
+              <p>
+                No image data is ever transmitted across the internet to our servers or third-party cloud services. Because your files never leave your device, Toolora is safe for compressing sensitive identification records, passports, contracts, and confidential personal photographs.
+              </p>
+            </div>
+          </section>
+        )}
 
         {/* SEO SECTION 4: Frequently Asked Questions (FAQ) */}
         {tool.faqs.length > 0 && (

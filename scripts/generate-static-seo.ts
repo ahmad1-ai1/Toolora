@@ -256,14 +256,56 @@ function getRoutes(): RouteSeo[] {
       })),
     };
 
+    const howToSchema =
+      tool.slug === 'image-compressor'
+        ? {
+            '@type': 'HowTo',
+            '@id': `${canonicalUrl}#howto`,
+            name: 'How to Compress an Image Online',
+            description:
+              'Step-by-step guide to compressing JPG, PNG, and WebP images online for free using Toolora.',
+            step: [
+              {
+                '@type': 'HowToStep',
+                position: 1,
+                name: 'Upload or select an image',
+                text: 'Drag and drop your JPG, PNG, or WebP picture into the upload box, or click browse files to select an image from your computer or mobile phone.',
+              },
+              {
+                '@type': 'HowToStep',
+                position: 2,
+                name: 'Adjust compression settings',
+                text: 'Use the interactive quality slider between 10% and 100% to find your ideal balance between file size reduction and visual clarity.',
+              },
+              {
+                '@type': 'HowToStep',
+                position: 3,
+                name: 'Preview and check resulting file size',
+                text: 'Review the real-time calculated output file size in kilobytes (KB) and savings percentage alongside the visual preview.',
+              },
+              {
+                '@type': 'HowToStep',
+                position: 4,
+                name: 'Download the compressed image',
+                text: 'Click the "Download Compressed Image" button to immediately save your optimized file directly to your device storage.',
+              },
+            ],
+          }
+        : null;
+
     routes.push({
       path: `/tools/${tool.slug}`,
       title: tool.seoTitle,
       description: tool.metaDescription,
       canonical: canonicalUrl,
-      ogType: 'article',
+      ogType: tool.slug === 'image-compressor' ? 'website' : 'article',
       ogImage: DEFAULT_OG_IMAGE,
-      structuredData: [webAppSchema, breadcrumbSchema, faqSchema],
+      structuredData: [
+        webAppSchema,
+        breadcrumbSchema,
+        ...(howToSchema ? [howToSchema] : []),
+        faqSchema,
+      ],
     });
   }
 
@@ -647,7 +689,198 @@ function generatePreRenderedBody(route: RouteSeo): string {
   } else if (isTool) {
     const slug = route.path.replace('/tools/', '');
     const tool = TOOLS.find((t) => t.slug === slug);
-    if (tool) {
+    if (tool && tool.slug === 'image-compressor') {
+      mainContent = `
+        <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
+          <ol class="flex items-center gap-2">
+            <li><a href="/" class="hover:underline">Home</a></li>
+            <li>/</li>
+            <li><a href="/tools" class="hover:underline">Tools</a></li>
+            <li>/</li>
+            <li class="font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(tool.name)}</li>
+          </ol>
+        </nav>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">${escapeHtml(tool.h1Title)}</h1>
+        <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">${escapeHtml(tool.longDescription)}</p>
+
+        <div class="p-8 mb-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-center">
+          <p class="font-medium text-slate-700 dark:text-slate-300">Toolora interactive ${escapeHtml(tool.name)} is loaded in your browser with 100% client-side privacy.</p>
+        </div>
+
+        <!-- Section 1: What is Image Compressor? -->
+        <section id="what-is-tool" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">What is ${escapeHtml(tool.name)}?</h2>
+          ${tool.whatIsParagraphs.map((p) => `<p class="mb-4 text-slate-700 dark:text-slate-300 leading-relaxed">${escapeHtml(p)}</p>`).join('')}
+        </section>
+
+        <!-- Section 2: How to Compress an Image Online -->
+        <section id="how-to-use" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">How to Compress an Image Online</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${tool.howToSteps.map((step, idx) => `
+              <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 flex items-start gap-3.5">
+                <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">${idx + 1}</div>
+                <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">${escapeHtml(step)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- Section 3: Target File Size Guide -->
+        <section id="target-file-size" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Compress Images to a Specific File Size</h2>
+          <p class="mb-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+            Whether you are submitting documents to an official job or visa application portal, attaching assets to an email, or optimizing images for web performance, you often need to reduce image size in KB to satisfy strict file size caps. Because compression algorithms analyze color variance, high-frequency textures, and original pixel dimensions, no single quality setting will produce an identical file size across different photos. However, you can easily hit common thresholds like 200KB, 100KB, or 50KB by using a systematic approach.
+          </p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Compress Photo to 50KB or 20KB</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+                Strict caps between 20KB and 50KB are customary for passport pictures, visa applications, digital signatures, and government exam upload forms. Because camera sensors record photos at 12 to 48 megapixels (often 4MB to 10MB), compressing a photo to 50KB through compression quality alone may cause severe blurriness.
+              </p>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <strong>Practical method:</strong> First scale down pixel dimensions (for example, to 600×600 or 800×600 pixels) using our <a href="/tools/image-resizer" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Resize an image online</a> tool. Then select JPG or WebP format with quality set between 55% and 65% until your file satisfies the required limit.
+              </p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Compress Image to 100KB</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+                A 100KB limit is the most popular benchmark for email newsletter headers, blog thumbnail graphics, and customer support ticket attachments. This target maintains vibrant colors without bloating inbox transfer sizes.
+              </p>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <strong>Practical method:</strong> Upload your picture and adjust the quality slider to around 70%–75%. If your file remains slightly above 100KB, nudge the quality slider down in 5% increments or moderately trim excess pixel dimensions.
+              </p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Compress Image to 200KB</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+                Webmasters and e-commerce designers regularly aim to compress image to 200KB for full-width website hero banners, landing page illustrations, and product zoom galleries. This delivers a crisp visual presentation on high-DPI Retina screens while comfortably passing Google Core Web Vitals Largest Contentful Paint (LCP) performance audits.
+              </p>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <strong>Practical method:</strong> Select 80%–85% quality in JPG or WebP mode. For standard 1920×1080 web images, this easily reduces raw camera files from 5MB down to approximately 150KB–200KB.
+              </p>
+            </div>
+            <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+              <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">500KB to 1MB Targets</h3>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+                For architectural galleries, photography lookbooks, client proof sheets, and presentation decks, retaining fine textures and smooth gradients is critical.
+              </p>
+              <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <strong>Practical method:</strong> Set the quality slider to 90% in JPG or WebP. This preserves near-lossless pixel fidelity while stripping bloated EXIF camera metadata and color profiles.
+              </p>
+            </div>
+          </div>
+          <div class="p-5 rounded-xl border border-indigo-100 dark:border-indigo-900/50 bg-indigo-50/50 dark:bg-indigo-950/20">
+            <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">Practical Steps for Hitting an Exact File Size Target</h3>
+            <ol class="list-decimal list-inside space-y-1.5 text-sm text-slate-700 dark:text-slate-300">
+              <li><strong>Choose JPG or WebP for photographs:</strong> Avoid raw PNG for photographs because PNG uses lossless compression, producing files 3x to 5x larger than JPG.</li>
+              <li><strong>Reduce image dimensions when needed:</strong> If starting from a high-resolution camera photo (e.g. 4000px wide), downsize dimensions first using our <a href="/tools/image-resizer" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Free Image Resizer</a>.</li>
+              <li><strong>Lower compression quality gradually:</strong> Adjust the slider in 5% to 10% increments rather than jumping directly to the lowest value.</li>
+              <li><strong>Check resulting file size:</strong> Examine the real-time calculated size badge and repeat until the required KB ceiling is reached.</li>
+            </ol>
+          </div>
+        </section>
+
+        <!-- Section 4: JPG vs PNG vs WebP Comparison Table -->
+        <section id="format-comparison" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">JPG vs PNG vs WebP: Which Format Should You Use?</h2>
+          <p class="mb-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+            Selecting the appropriate image format is just as important as adjusting the compression slider. Each format relies on distinct encoding algorithms tailored for specific image types and web use cases.
+          </p>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-left text-sm border-collapse border border-slate-200 dark:border-slate-800">
+              <thead>
+                <tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+                  <th class="py-3 px-4 font-bold text-slate-900 dark:text-white">Format</th>
+                  <th class="py-3 px-4 font-bold text-slate-900 dark:text-white">Best For</th>
+                  <th class="py-3 px-4 font-bold text-slate-900 dark:text-white">Compression</th>
+                  <th class="py-3 px-4 font-bold text-slate-900 dark:text-white">Transparency</th>
+                  <th class="py-3 px-4 font-bold text-slate-900 dark:text-white">Typical Use</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                <tr>
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white">JPG / JPEG</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Photographs & complex scenery</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Lossy (discrete cosine transform)</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">No (fills with solid white)</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Web articles, camera photos, social media uploads, email attachments</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white">PNG</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Logos, icons, text & screenshots</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Lossless (DEFLATE algorithm)</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Yes (full alpha channel)</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Brand logos, transparent website assets, UI mockups, infographics</td>
+                </tr>
+                <tr>
+                  <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white">WebP</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Modern web publishing & Core Web Vitals</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Lossy & Lossless options</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">Yes (in lossy and lossless)</td>
+                  <td class="py-3 px-4 text-slate-700 dark:text-slate-300">High-speed websites, e-commerce storefronts, progressive web apps</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed text-sm">
+            <p><strong>When to choose JPG:</strong> JPG is generally suitable for photographs and continuous-tone imagery because gradual color transitions compress efficiently without conspicuous visual artifacts. Note that JPG does not support alpha transparency; transparent areas are filled with solid white during export.</p>
+            <p><strong>When to choose PNG:</strong> PNG is useful when transparency or lossless quality matters. Company emblems, transparent navigation badges, and screenshots containing crisp text stay sharp without blurry compression halos. However, saving photographic imagery as PNG results in substantially heavier file sizes.</p>
+            <p><strong>When to choose WebP:</strong> Developed by Google, WebP can provide efficient compression for supported web workflows, reducing file sizes by 25%–35% compared to JPG at equivalent perceptual quality while supporting transparency. Although universally supported in contemporary web browsers, some legacy image viewers or specialized document submission portals still mandate traditional JPG or PNG files.</p>
+          </div>
+        </section>
+
+        <!-- Section 5: Why use Toolora's Image Compressor? -->
+        <section id="why-use-toolora" class="mb-12">
+          <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Why use Toolora's ${escapeHtml(tool.name)}?</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            ${(tool.whyUseDetailed || []).map((b) => `
+              <div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">${escapeHtml(b.title)}</h3>
+                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">${escapeHtml(b.description)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- Section 6: Client-Side Privacy & In-Browser Processing -->
+        <section id="privacy-security" class="mb-12">
+          <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Client-Side Privacy & In-Browser Processing</h2>
+          <div class="p-6 rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/30 dark:bg-emerald-950/10 space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+            <p>Conventional online converters upload your personal files over public networks to remote web servers, where pictures are queued, compressed, and stored in temporary cloud buckets. This model introduces latency and potential data privacy concerns.</p>
+            <p>Toolora operates on a purely client-side architecture: when you select an image, it is decoded into local memory inside your web browser via standard HTML5 Canvas APIs (<code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono text-xs">drawImage</code> and <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono text-xs">toBlob</code>). Compression is calculated using your device's own hardware resources.</p>
+            <p>No image data is ever transmitted across the internet to our servers or third-party cloud services. Because your files never leave your device, Toolora is safe for compressing sensitive identification records, passports, contracts, and confidential personal photographs.</p>
+          </div>
+        </section>
+
+        <!-- Section 7: Frequently Asked Questions -->
+        <section id="faq" class="mb-12">
+          <h2 class="text-2xl font-bold mb-6 text-slate-900 dark:text-white">Frequently Asked Questions</h2>
+          <div class="space-y-4">
+            ${tool.faqs.map((f) => `
+              <div class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-2">${escapeHtml(f.question)}</h3>
+                <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-sm">${escapeHtml(f.answer)}</p>
+              </div>
+            `).join('')}
+          </div>
+        </section>
+
+        <!-- Section 8: Related Online Tools -->
+        <section id="related-tools" class="mb-12">
+          <h2 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white">Related Online Tools</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Explore complementary utilities that pair seamlessly with ${escapeHtml(tool.name)}.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${(tool.relatedLinks || []).map((link) => `
+              <a href="/tools/${link.slug}" class="block p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 hover:border-indigo-500 transition group">
+                <h3 class="text-base font-bold text-indigo-600 dark:text-indigo-400 group-hover:underline mb-1">${escapeHtml(link.anchorText)}</h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">${escapeHtml(link.description)}</p>
+              </a>
+            `).join('')}
+          </div>
+        </section>
+      `;
+    } else if (tool) {
       mainContent = `
         <nav aria-label="Breadcrumb" class="mb-6 text-sm text-slate-500">
           <ol class="flex items-center gap-2">

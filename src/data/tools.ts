@@ -86,10 +86,10 @@ export const TOOLS: ToolMetadata[] = [
       'Batch download and privacy guaranteed',
     ],
     howToSteps: [
-      'Drag and drop your image file or click the upload area to select a JPG, PNG, or WebP picture from your device.',
-      'Adjust the compression slider to find your preferred balance between visual quality and file size reduction.',
-      'Examine the live preview to verify image sharpness alongside the calculated savings percentage.',
-      'Click the "Download Compressed Image" button to save your optimized file immediately to your computer or mobile device.',
+      'Upload or select an image: Drag and drop your JPG, PNG, or WebP picture into the upload box, or click browse files to select an image from your computer or mobile phone.',
+      'Adjust compression settings: Use the interactive quality slider between 10% and 100% to find your ideal balance between file size reduction and visual clarity.',
+      'Preview and check resulting file size: Review the real-time calculated output file size in kilobytes (KB) and savings percentage alongside the visual preview.',
+      'Download the compressed image: Click the "Download Compressed Image" button to immediately save your optimized file directly to your device storage.',
     ],
     whyUse: [
       '100% Client-side: Your private photos and sensitive documents never leave your browser.',
@@ -117,23 +117,48 @@ export const TOOLS: ToolMetadata[] = [
         question: 'Is there any file size limit or daily usage quota?',
         answer: 'Because processing takes place entirely on your device hardware, there are no artificial daily limits, subscriptions, or wait timers on Toolora.',
       },
+      {
+        question: 'How do I compress an image to 200KB?',
+        answer: 'To compress an image to 200KB, upload your image and set the compression quality slider to approximately 75%–85%. If the resulting file remains above 200KB because the source image has high pixel dimensions (such as a 12MP or 4K photo), reduce the quality in 5% increments or resize the image dimensions using our Image Resizer before re-compressing.',
+      },
+      {
+        question: 'How do I reduce an image to 100KB or 50KB for online forms?',
+        answer: 'Reaching strict thresholds like 100KB, 50KB, or 20KB for passport, visa, or job application portals usually requires both compression and dimension scaling. Ensure the format is set to JPG or WebP rather than uncompressed PNG. Lower the quality slider to 50%–65%, and if necessary, reduce pixel dimensions (e.g. to 600×600 or 800×600 pixels) until the file weight matches the required portal limit.',
+      },
+      {
+        question: 'How can I compress a photo without losing noticeable quality?',
+        answer: 'Human vision cannot easily detect minor high-frequency color variations at standard viewing distances. Setting the quality slider to 80%–85% leverages visually lossless lossy compression, which eliminates redundant pixel data to reduce file weight by up to 70% while keeping text, edges, and portraits sharp.',
+      },
+      {
+        question: 'Which image format is best for compression: JPG, PNG, or WebP?',
+        answer: 'JPG is best for photographs with rich colors and gradients. PNG is essential for logos, icons, and screenshots that require transparent backgrounds or pixel-perfect lines. WebP is a modern web format that combines the benefits of both, offering superior compression and transparency for web browsers.',
+      },
+      {
+        question: 'Can I compress an image on my mobile phone or tablet?',
+        answer: 'Yes. Toolora is fully responsive and executes client-side compression directly inside mobile web browsers (such as iOS Safari and Android Chrome). You can take a photo or select an existing image from your photo library, compress it on your device, and download it instantly without installing any app.',
+      },
     ],
-    relatedToolSlugs: ['image-resizer', 'jpg-to-pdf', 'pdf-to-jpg'],
+    relatedToolSlugs: ['image-resizer', 'jpg-to-pdf', 'pdf-to-jpg', 'pdf-compressor'],
     relatedLinks: [
       {
         slug: 'image-resizer',
-        anchorText: 'Free Image Resizer',
-        description: 'Adjust width and height dimensions or scale images for social media presets.',
+        anchorText: 'Resize an image online',
+        description: 'Adjust width and height dimensions or scale pixel resolutions to help reach target KB limits.',
       },
       {
         slug: 'jpg-to-pdf',
-        anchorText: 'JPG to PDF Converter',
-        description: 'Combine compressed images into an organized, printable PDF document.',
+        anchorText: 'Convert JPG to PDF',
+        description: 'Combine compressed images into an organized, printable PDF document without desktop software.',
       },
       {
         slug: 'pdf-to-jpg',
-        anchorText: 'PDF to JPG Converter',
-        description: 'Convert PDF document pages into high-resolution JPG images.',
+        anchorText: 'Convert PDF to JPG',
+        description: 'Extract and convert PDF document pages into high-resolution JPG image files.',
+      },
+      {
+        slug: 'pdf-compressor',
+        anchorText: 'Compress PDF documents online',
+        description: 'Reduce the file size of PDF documents and scanned reports for easy email attachment.',
       },
     ],
   },

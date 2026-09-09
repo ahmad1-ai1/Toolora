@@ -5,6 +5,7 @@ export interface SeoHeadProps {
   title: string;
   description: string;
   path: string;
+  ogType?: string;
   ogImage?: string;
   structuredData?: object | object[];
 }
@@ -13,6 +14,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
   title,
   description,
   path,
+  ogType = 'website',
   ogImage = DEFAULT_OG_IMAGE,
   structuredData,
 }) => {
@@ -61,7 +63,7 @@ export const SeoHead: React.FC<SeoHeadProps> = ({
     setMetaProperty('og:description', description);
     setMetaProperty('og:url', canonicalUrl);
     setMetaProperty('og:site_name', SITE_NAME);
-    setMetaProperty('og:type', path === '/' ? 'website' : 'article');
+    setMetaProperty('og:type', ogType);
     setMetaProperty('og:image', ogImage);
 
     // 5. Twitter Card Tags
