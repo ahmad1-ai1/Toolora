@@ -155,7 +155,8 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
           '@type': 'HowTo',
           '@id': `${canonicalUrl}#howto`,
           name: 'How to Compress an Image Online',
-          description: 'Step-by-step guide to compressing JPG, PNG, and WebP images online for free using Toolora.',
+          description:
+            'Step-by-step guide to compressing JPG, PNG, and WebP images online for free using Toolora.',
           step: [
             {
               '@type': 'HowToStep',
@@ -183,6 +184,40 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
             },
           ],
         }
+      : tool.slug === 'pdf-compressor'
+      ? {
+          '@type': 'HowTo',
+          '@id': `${canonicalUrl}#howto`,
+          name: 'How to Compress a PDF Online',
+          description:
+            'Step-by-step guide to compressing PDF documents online for free using Toolora.',
+          step: [
+            {
+              '@type': 'HowToStep',
+              position: 1,
+              name: 'Upload your PDF document',
+              text: 'Drag and drop your PDF file into the upload zone, or click browse files to select a document from your computer or mobile device (up to 80MB).',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 2,
+              name: 'Choose optimization level',
+              text: 'Select Standard compression to retain document metadata, or choose Aggressive mode to strip non-essential title, author, and producer tags for maximum size reduction.',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 3,
+              name: 'Compress and check resulting file size',
+              text: 'Toolora cleans redundant object dictionaries and packs streams, displaying your before-and-after size in KB/MB, exact bytes saved, and savings percentage with diagnostic feedback.',
+            },
+            {
+              '@type': 'HowToStep',
+              position: 4,
+              name: 'Download the smaller PDF',
+              text: 'Click the "Download Compressed PDF" button to immediately save your optimized document directly to your device storage.',
+            },
+          ],
+        }
       : null;
 
   const faqSchema = {
@@ -199,7 +234,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
   };
 
   const breadcrumbItems =
-    tool.slug === 'image-compressor'
+    tool.slug === 'image-compressor' || tool.slug === 'pdf-compressor'
       ? [
           { label: 'Tools', href: '/tools' },
           { label: tool.name },
@@ -591,6 +626,261 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
           </section>
         )}
 
+        {/* PDF COMPRESSOR SPECIALIZED SECTION 1: Target File Size Guide */}
+        {tool.slug === 'pdf-compressor' && (
+          <section
+            id="target-file-size"
+            className={`p-6 sm:p-8 rounded-3xl border ${
+              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+            }`}
+          >
+            <div className="max-w-3xl mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                Compress PDF to a Specific File Size
+              </h2>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                Whether you need to reduce PDF file size for application upload portals, satisfy strict email attachment quotas, or optimize heavy reports for fast web viewing, achieving an exact file size target requires understanding document composition. Because PDF documents combine text layers, embedded fonts, vector linework, and raster graphics, no automated tool can guarantee an exact byte weight without analyzing internal elements. However, by applying the right optimization workflow, you can reliably compress PDF to 1MB, 500KB, or 200KB.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div
+                className={`p-5 rounded-2xl border ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+                    Compress PDF to 1MB
+                  </h3>
+                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                    Email &amp; Job Applications
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                  A 1MB file size limit is standard for corporate applicant tracking systems (such as Workday, Taleo, and Greenhouse), university submission portals, and email attachments. Multi-page resumes, academic research papers, and pitch decks exported from Microsoft Word, Google Docs, or InDesign frequently weigh 3MB to 8MB due to uncompressed internal object streams.
+                </p>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <strong>Practical method:</strong> Upload your document and select Aggressive mode to strip non-essential metadata and repack object streams. For clean vector documents, this almost always brings files well beneath 1MB.
+                </p>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+                    Compress PDF to 500KB
+                  </h3>
+                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                    Visa &amp; Government Portals
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                  Immigration portals, visa application services, tax authorities, and legal filing systems frequently enforce a strict 500KB cap per uploaded document. When documents contain scanned receipts or identity card photos, reaching 500KB requires minimizing image payload.
+                </p>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <strong>Practical method:</strong> If your PDF is an image scan that remains over 500KB after compression, extract the pages using our <Link href="/tools/pdf-to-jpg" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">PDF to JPG</Link> tool, downscale pixel dimensions or reduce quality with our <Link href="/tools/image-resizer" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Resizer</Link> or <Link href="/tools/image-compressor" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Compressor</Link>, then reassemble with <Link href="/tools/jpg-to-pdf" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">JPG to PDF</Link>.
+                </p>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+                    Compress PDF to 200KB
+                  </h3>
+                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                    Strict Upload Limits
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                  Public recruitment exams, civil service portals, and digital certificate systems sometimes mandate ultra-compact PDF files under 200KB or even 100KB for single-page documents.
+                </p>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <strong>Practical method:</strong> For 1- to 3-page text PDFs, Standard or Aggressive compression easily satisfies 200KB. For scanned certificates, ensure the scanning resolution was 150 DPI rather than 600 DPI, and convert color pages to grayscale if permissible.
+                </p>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <h3 className="font-bold text-sm text-gray-900 dark:text-white">
+                    Reduce PDF Size for Upload &amp; Email
+                  </h3>
+                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                    Sharing &amp; Bandwidth
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+                  Standard email providers (including Gmail, Outlook, and Yahoo) bounce attachments exceeding 20MB–25MB, while corporate firewalls may restrict files over 10MB. Shrinking PDFs prevents failed deliveries and ensures recipients can review files instantly on mobile devices.
+                </p>
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <strong>Practical method:</strong> Run your file through Toolora's in-browser compressor to deflate internal streams before sending, saving bandwidth for both sender and recipient.
+                </p>
+              </div>
+            </div>
+
+            <div
+              className={`p-5 rounded-2xl border ${
+                isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+              }`}
+            >
+              <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">
+                Factors Determining How Much a PDF Can Shrink
+              </h3>
+              <ul className="list-disc pl-5 space-y-1.5 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                <li>
+                  <strong>Native vector text vs. scanned images:</strong> Pure text and vector typography compress rapidly with negligible overhead, whereas 300+ DPI photographic scans require image-level optimization.
+                </li>
+                <li>
+                  <strong>Embedded fonts:</strong> Documents embedding entire font families rather than font subsets add substantial weight.
+                </li>
+                <li>
+                  <strong>Existing stream compression:</strong> Files already processed with FlateDecode or exported with "Smallest File Size" presets leave little redundant structural data to strip.
+                </li>
+                <li>
+                  <strong>Metadata &amp; revision histories:</strong> Aggressive mode cleans accumulated edit logs, author tags, and thumbnail caches.
+                </li>
+              </ul>
+            </div>
+          </section>
+        )}
+
+        {/* PDF COMPRESSOR SPECIALIZED SECTION 2: Compression Expectations & Quality */}
+        {tool.slug === 'pdf-compressor' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <section
+              id="compression-expectations"
+              className={`p-6 sm:p-8 rounded-3xl border flex flex-col justify-between ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  How Much Can a PDF Be Compressed?
+                </h2>
+                <div className="space-y-3 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <p>
+                    Because PDF files vary widely in construction, compression ratios differ significantly depending on the document type:
+                  </p>
+                  <p>
+                    <strong>Text-heavy PDFs:</strong> Documents created in Word or Docs typically experience 15% to 40% reduction through dictionary cleaning and stream deflating, though their starting size is already relatively compact.
+                  </p>
+                  <p>
+                    <strong>Scanned &amp; image-heavy PDFs:</strong> If scanner software stored raw, uncompressed bitmaps (such as TIFF or uncompressed streams), savings can exceed 50% to 75%. However, if pages were already stored as compressed JPEGs, container repackaging saves 5% to 15% without re-sampling image pixels.
+                  </p>
+                  <p>
+                    <strong>Already-optimized PDFs:</strong> If a document was previously compressed or exported using web presets in Adobe Acrobat, internal streams are already minimized. Toolora transparently provides diagnostic feedback when a document is already optimized.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section
+              id="quality-preservation"
+              className={`p-6 sm:p-8 rounded-3xl border flex flex-col justify-between ${
+                isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+              }`}
+            >
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  PDF Compression Without Losing Quality
+                </h2>
+                <div className="space-y-3 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <p>
+                    Toolora employs lossless-style stream compression and object table optimization. Unlike crude online rasterizers that convert every page into a low-resolution JPEG image, our algorithm preserves the vector geometry of your document:
+                  </p>
+                  <p>
+                    <strong>Razor-sharp vector text:</strong> Typography is rendered from embedded font outlines and vector coordinates, never blurred into pixels. Text remains selectable, copy-pasteable, and fully searchable.
+                  </p>
+                  <p>
+                    <strong>High-resolution printing:</strong> Lines, diagrams, and corporate letterheads stay razor-sharp at any zoom level and print cleanly at 300+ DPI.
+                  </p>
+                  <p>
+                    <strong>Safe for legal &amp; formal use:</strong> Digital signatures, form fields, and exact typographic layouts remain completely unaltered.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
+        {/* PDF COMPRESSOR SPECIALIZED SECTION 3: Why Compress a PDF? */}
+        {tool.slug === 'pdf-compressor' && (
+          <section
+            id="why-compress-pdf"
+            className={`p-6 sm:p-8 rounded-3xl border ${
+              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+            }`}
+          >
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6">
+              Why Compress a PDF File?
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div
+                className={`p-5 rounded-2xl border ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">
+                  Email Attachment Limits
+                </h3>
+                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                  Avoid rejected emails and 25MB delivery bounce-backs by shrinking document attachments before sending.
+                </p>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">
+                  Portal &amp; ATS Compliance
+                </h3>
+                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                  Satisfy strict 500KB, 1MB, or 2MB upload ceilings on job application portals, visa services, and tax forms.
+                </p>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">
+                  Academic Submissions
+                </h3>
+                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                  Upload term papers, theses, and scanned assignments smoothly into Canvas, Blackboard, or Google Classroom.
+                </p>
+              </div>
+
+              <div
+                className={`p-5 rounded-2xl border ${
+                  isDark ? 'bg-[#141720] border-[#222733]' : 'bg-gray-50 border-gray-200'
+                }`}
+              >
+                <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">
+                  Cloud &amp; Mobile Economy
+                </h3>
+                <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
+                  Conserve storage quotas on Google Drive or iCloud and allow clients to view files rapidly on cellular data.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* SEO SECTION 3: Why use Toolora's [Tool Name]? */}
         <section
           id="why-use-toolora"
@@ -672,6 +962,41 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
               </p>
               <p>
                 No image data is ever transmitted across the internet to our servers or third-party cloud services. Because your files never leave your device, Toolora is safe for compressing sensitive identification records, passports, contracts, and confidential personal photographs.
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* PDF COMPRESSOR SPECIALIZED SECTION: Client-Side Privacy & In-Browser Processing */}
+        {tool.slug === 'pdf-compressor' && (
+          <section
+            id="privacy-security"
+            className={`p-6 sm:p-8 rounded-3xl border ${
+              isDark ? 'bg-[#10131a] border-[#1e232e]' : 'bg-white border-gray-200'
+            }`}
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-500 border border-emerald-500/20 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
+                  Is PDF Compression Safe and Private?
+                </h2>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  100% In-Browser Execution — Zero Server Uploads
+                </p>
+              </div>
+            </div>
+            <div className="space-y-3.5 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p>
+                Conventional PDF converter websites upload your files over public networks to remote web servers, where documents are queued, decompressed, and temporarily stored in cloud storage buckets. For confidential financial tax filings, legal agreements, medical charts, or corporate resumes, remote processing creates significant security and privacy concerns.
+              </p>
+              <p>
+                Toolora operates on a 100% client-side architecture: when you select a PDF, the binary document is parsed directly into an ArrayBuffer within your web browser's local memory using <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-indigo-500 text-xs font-mono">pdf-lib</code> and WebAssembly / JavaScript. Stream optimization, cross-reference table rebuilds, and metadata stripping execute strictly on your device's CPU.
+              </p>
+              <p>
+                No document data is ever transmitted across the internet to Toolora's servers or any third-party cloud infrastructure. Because your files never leave your device, Toolora provides guaranteed security for confidential tax returns, NDA-protected business plans, and personal records.
               </p>
             </div>
           </section>

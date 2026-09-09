@@ -69,8 +69,8 @@ export const PdfCompressor: React.FC = () => {
         pdfDoc.setAuthor('');
         pdfDoc.setSubject('');
         pdfDoc.setKeywords([]);
-        pdfDoc.setProducer('OmniTools PDF Optimizer');
-        pdfDoc.setCreator('OmniTools');
+        pdfDoc.setProducer('Toolora PDF Optimizer');
+        pdfDoc.setCreator('Toolora');
       }
 
       // Save with object streams optimization enabled
