@@ -929,7 +929,7 @@ function generatePreRenderedBody(route: RouteSeo): string {
         <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">${escapeHtml(tool.longDescription)}</p>
 
         <div class="p-8 mb-12 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 text-center">
-          <p class="font-medium text-slate-700 dark:text-slate-300">Toolora interactive ${escapeHtml(tool.h1Title)} is loaded in your browser with 100% client-side privacy. Process files up to 80MB directly on your device with zero server uploads.</p>
+          <p class="font-medium text-slate-700 dark:text-slate-300">Toolora interactive ${escapeHtml(tool.h1Title)} runs in your browser. PDF processing takes place in your browser, so the PDF file does not need to be uploaded to a remote compression server. Supports files up to 80MB.</p>
         </div>
 
         <!-- Section 1: What is a PDF Compressor? -->
@@ -955,31 +955,31 @@ function generatePreRenderedBody(route: RouteSeo): string {
         <section id="target-file-size" class="mb-12">
           <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Compress PDF to a Specific File Size</h2>
           <p class="mb-6 text-slate-700 dark:text-slate-300 leading-relaxed">
-            Whether you need to reduce PDF file size for application upload portals, satisfy strict email attachment quotas, or optimize heavy reports for fast web viewing, achieving an exact file size target requires understanding document composition. Because PDF documents combine text layers, embedded fonts, vector linework, and raster graphics, no automated tool can guarantee an exact byte weight without analyzing internal elements. However, by applying the right optimization workflow, you can reliably compress PDF to 1MB, 500KB, or 200KB.
+            Whether you need to reduce PDF file size for application upload portals, email attachments, or web viewing, achieving a specific file-size target depends on the document's original contents. Because PDF documents combine text layers, embedded fonts, vector linework, and raster graphics, no automated tool can guarantee an exact byte weight without analyzing or altering internal elements. If your destination requires a PDF under 1MB, 500KB, or 200KB, compress the file and check the resulting size. If it is still above the required limit, additional document optimization or reducing image resolution may be necessary.
           </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
               <div class="flex items-center justify-between gap-2 mb-2">
                 <h3 class="text-base font-bold text-slate-900 dark:text-white">Compress PDF to 1MB</h3>
-                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">Email &amp; Job Applications</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">Application &amp; Email Portals</span>
               </div>
               <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
-                A 1MB file size limit is standard for corporate applicant tracking systems (such as Workday, Taleo, and Greenhouse), university submission portals, and email attachments. Multi-page resumes, academic research papers, and pitch decks exported from Microsoft Word, Google Docs, or InDesign frequently weigh 3MB to 8MB due to uncompressed internal object streams.
+                Some application, academic, government, and other online portals may impose their own file-size limits, with 1MB often recommended for resumes, academic papers, and application documents. Always check the requirements of the specific portal before uploading.
               </p>
               <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                <strong>Practical method:</strong> Upload your document and select Aggressive mode to strip non-essential metadata and repack object streams. For clean vector documents, this almost always brings files well beneath 1MB.
+                <strong>Practical method:</strong> If your destination requires a PDF under 1MB, compress the file and check the resulting size. Upload your document and select Aggressive mode to strip non-essential metadata and repack object streams. If the document originated from uncompressed scans and remains over 1MB, additional document optimization or downscaling image resolution may be necessary.
               </p>
             </div>
             <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
               <div class="flex items-center justify-between gap-2 mb-2">
                 <h3 class="text-base font-bold text-slate-900 dark:text-white">Compress PDF to 500KB</h3>
-                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">Visa &amp; Government Portals</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">Form &amp; Portal Ceiling</span>
               </div>
               <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
-                Immigration portals, visa application services, tax authorities, and legal filing systems frequently enforce a strict 500KB cap per uploaded document. When documents contain scanned receipts or identity card photos, reaching 500KB requires minimizing image payload.
+                Certain online services, visa submission systems, and document upload forms specify a 500KB limit per attachment. When documents contain scanned receipts or identity cards, reaching 500KB may require optimizing embedded image data.
               </p>
               <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                <strong>Practical method:</strong> If your PDF is an image scan that remains over 500KB after compression, extract the pages using our <a href="/tools/pdf-to-jpg" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">PDF to JPG</a> tool, downscale pixel dimensions or reduce quality with our <a href="/tools/image-resizer" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Resizer</a> or <a href="/tools/image-compressor" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Compressor</a>, then reassemble with <a href="/tools/jpg-to-pdf" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">JPG to PDF</a>.
+                <strong>Practical method:</strong> If your destination requires a PDF under 500KB, compress the file and check the resulting size. If your PDF is an image scan that remains over 500KB after compression, extract the pages using our <a href="/tools/pdf-to-jpg" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">PDF to JPG</a> tool, downscale pixel dimensions or reduce quality with our <a href="/tools/image-resizer" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Resizer</a> or <a href="/tools/image-compressor" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Compressor</a>, then reassemble with <a href="/tools/jpg-to-pdf" class="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">JPG to PDF</a>.
               </p>
             </div>
             <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
@@ -988,10 +988,10 @@ function generatePreRenderedBody(route: RouteSeo): string {
                 <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">Strict Upload Limits</span>
               </div>
               <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
-                Public recruitment exams, civil service portals, and digital certificate systems sometimes mandate ultra-compact PDF files under 200KB or even 100KB for single-page documents.
+                Some specialized portals, recruitment systems, or certificate archives mandate ultra-compact PDF files under 200KB. Always check the requirements of the specific portal before uploading.
               </p>
               <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                <strong>Practical method:</strong> For 1- to 3-page text PDFs, Standard or Aggressive compression easily satisfies 200KB. For scanned certificates, ensure the scanning resolution was 150 DPI rather than 600 DPI, and convert color pages to grayscale if permissible.
+                <strong>Practical method:</strong> If your destination requires a PDF under 200KB, compress the file and check the resulting size. For text-only PDFs, standard or aggressive stream compression can often help meet this target. For scanned documents that remain above 200KB, scanning at lower resolution (such as 150 DPI) or converting color pages to grayscale before assembly is typically necessary.
               </p>
             </div>
             <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
@@ -1000,7 +1000,7 @@ function generatePreRenderedBody(route: RouteSeo): string {
                 <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">Sharing &amp; Bandwidth</span>
               </div>
               <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
-                Standard email providers (including Gmail, Outlook, and Yahoo) bounce attachments exceeding 20MB–25MB, while corporate firewalls may restrict files over 10MB. Shrinking PDFs prevents failed deliveries and ensures recipients can review files instantly on mobile devices.
+                Email attachment limits vary by provider. Compressing a PDF can make it easier to send when the original file is too large. Reducing document size also prevents failed deliveries and ensures recipients can review files quickly on mobile devices.
               </p>
               <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                 <strong>Practical method:</strong> Run your file through Toolora's in-browser compressor to deflate internal streams before sending, saving bandwidth for both sender and recipient.
@@ -1023,10 +1023,10 @@ function generatePreRenderedBody(route: RouteSeo): string {
           <section id="compression-expectations" class="p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
             <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-3">How Much Can a PDF Be Compressed?</h2>
             <div class="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              <p>Because PDF files vary widely in construction, compression ratios differ significantly depending on the document type:</p>
-              <p><strong>Text-heavy PDFs:</strong> Documents created in Word or Docs typically experience 15% to 40% reduction through dictionary cleaning and stream deflating, though their starting size is already relatively compact.</p>
-              <p><strong>Scanned &amp; image-heavy PDFs:</strong> If scanner software stored raw, uncompressed bitmaps (such as TIFF or uncompressed streams), savings can exceed 50% to 75%. However, if pages were already stored as compressed JPEGs, container repackaging saves 5% to 15% without re-sampling image pixels.</p>
-              <p><strong>Already-optimized PDFs:</strong> If a document was previously compressed or exported using web presets in Adobe Acrobat, internal streams are already minimized. Toolora transparently provides diagnostic feedback when a document is already optimized.</p>
+              <p>Compression results vary significantly depending on the PDF's images, fonts, structure, and how well it was compressed originally. No tool can promise a specific percentage reduction without inspecting the document's internal assets.</p>
+              <p><strong>Text-heavy PDFs:</strong> Documents generated from text editors or word processors may see reductions from dictionary cleaning and stream deflating, though their starting size is often already compact.</p>
+              <p><strong>Scanned &amp; image-heavy PDFs:</strong> If scanner software stored raw, uncompressed bitmaps or inefficient container streams, savings can be substantial. However, if pages were already stored as compressed images (like JPEGs), container repackaging alone will yield modest reduction without re-sampling image pixels.</p>
+              <p><strong>Already-optimized PDFs:</strong> If a document was previously compressed or exported using compact web presets, internal streams are already minimized. Toolora transparently provides diagnostic feedback when a document is already well optimized.</p>
             </div>
           </section>
 
@@ -1047,15 +1047,15 @@ function generatePreRenderedBody(route: RouteSeo): string {
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
               <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Email Attachment Limits</h3>
-              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Avoid rejected emails and 25MB delivery bounce-backs by shrinking document attachments before sending.</p>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Email attachment limits vary by provider. Compressing a PDF can make it easier to send when the original file is too large.</p>
             </div>
             <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
-              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Portal &amp; ATS Compliance</h3>
-              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Satisfy strict 500KB, 1MB, or 2MB upload ceilings on job application portals, visa services, and tax forms.</p>
+              <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Portal &amp; Application Limits</h3>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Some application, academic, government, and other online portals may impose their own file-size limits. Always check the requirements of the specific portal before uploading.</p>
             </div>
             <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
               <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Academic Submissions</h3>
-              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Upload term papers, theses, and scanned assignments smoothly into Canvas, Blackboard, or Google Classroom.</p>
+              <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">Upload term papers, theses, and scanned assignments smoothly into educational course portals and review systems.</p>
             </div>
             <div class="p-5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
               <h3 class="font-bold text-sm text-slate-900 dark:text-white mb-2">Cloud &amp; Mobile Economy</h3>
@@ -1082,8 +1082,8 @@ function generatePreRenderedBody(route: RouteSeo): string {
           <h2 class="text-2xl font-bold mb-4 text-slate-900 dark:text-white">Is PDF Compression Safe and Private?</h2>
           <div class="p-6 rounded-xl border border-emerald-200 dark:border-emerald-900/40 bg-emerald-50/30 dark:bg-emerald-950/10 space-y-4 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
             <p>Conventional PDF converter websites upload your files over public networks to remote web servers, where documents are queued, decompressed, and temporarily stored in cloud storage buckets. For confidential financial tax filings, legal agreements, medical charts, or corporate resumes, remote processing creates significant security and privacy concerns.</p>
-            <p>Toolora operates on a 100% client-side architecture: when you select a PDF, the binary document is parsed directly into an ArrayBuffer within your web browser's local memory using <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono text-xs">pdf-lib</code> and WebAssembly / JavaScript. Stream optimization, cross-reference table rebuilds, and metadata stripping execute strictly on your device's CPU.</p>
-            <p>No document data is ever transmitted across the internet to Toolora's servers or any third-party cloud infrastructure. Because your files never leave your device, Toolora provides guaranteed security for confidential tax returns, NDA-protected business plans, and personal records.</p>
+            <p>Toolora operates on a client-side architecture: when you select a PDF, the binary document is parsed directly into memory within your web browser using <code class="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 font-mono text-xs">pdf-lib</code>. Stream optimization, cross-reference table rebuilds, and metadata stripping execute locally on your device.</p>
+            <p>PDF processing takes place in your browser, so the PDF file does not need to be uploaded to a remote compression server. This in-browser approach provides enhanced privacy for tax forms, business documents, and personal records.</p>
           </div>
         </section>
 
@@ -1292,10 +1292,14 @@ function generateHtmlForRoute(templateHtml: string, route: RouteSeo): string {
 
   // 7. Inject pre-rendered semantic body inside <div id="root"> so search crawlers and lynx/curl get full content & visible H1
   const bodyHtml = generatePreRenderedBody(route);
-  html = html.replace(
-    /<div id="root"><\/div>/i,
-    `<div id="root">${bodyHtml}</div>`
-  );
+  if (html.includes('<div id="root"></div>')) {
+    html = html.replace('<div id="root"></div>', `<div id="root">${bodyHtml}</div>`);
+  } else {
+    html = html.replace(
+      /<div id="root">[\s\S]*?<\/div>(?=\s*<script|\s*<\/body>)/i,
+      `<div id="root">${bodyHtml}</div>`
+    );
+  }
 
   return html;
 }

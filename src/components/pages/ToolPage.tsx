@@ -639,7 +639,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                 Compress PDF to a Specific File Size
               </h2>
               <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                Whether you need to reduce PDF file size for application upload portals, satisfy strict email attachment quotas, or optimize heavy reports for fast web viewing, achieving an exact file size target requires understanding document composition. Because PDF documents combine text layers, embedded fonts, vector linework, and raster graphics, no automated tool can guarantee an exact byte weight without analyzing internal elements. However, by applying the right optimization workflow, you can reliably compress PDF to 1MB, 500KB, or 200KB.
+                Whether you need to reduce PDF file size for application upload portals, email attachments, or web viewing, achieving a specific file-size target depends on the document's original contents. Because PDF documents combine text layers, embedded fonts, vector linework, and raster graphics, no automated tool can guarantee an exact byte weight without analyzing or altering internal elements. If your destination requires a PDF under 1MB, 500KB, or 200KB, compress the file and check the resulting size. If it is still above the required limit, additional document optimization or reducing image resolution may be necessary.
               </p>
             </div>
 
@@ -654,14 +654,14 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                     Compress PDF to 1MB
                   </h3>
                   <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                    Email &amp; Job Applications
+                    Application &amp; Email Portals
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
-                  A 1MB file size limit is standard for corporate applicant tracking systems (such as Workday, Taleo, and Greenhouse), university submission portals, and email attachments. Multi-page resumes, academic research papers, and pitch decks exported from Microsoft Word, Google Docs, or InDesign frequently weigh 3MB to 8MB due to uncompressed internal object streams.
+                  Some application, academic, government, and other online portals may impose their own file-size limits, with 1MB often recommended for resumes, academic papers, and application documents. Always check the requirements of the specific portal before uploading.
                 </p>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  <strong>Practical method:</strong> Upload your document and select Aggressive mode to strip non-essential metadata and repack object streams. For clean vector documents, this almost always brings files well beneath 1MB.
+                  <strong>Practical method:</strong> If your destination requires a PDF under 1MB, compress the file and check the resulting size. Upload your document and select Aggressive mode to strip non-essential metadata and repack object streams. If the document originated from uncompressed scans and remains over 1MB, additional document optimization or downscaling image resolution may be necessary.
                 </p>
               </div>
 
@@ -675,14 +675,14 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                     Compress PDF to 500KB
                   </h3>
                   <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                    Visa &amp; Government Portals
+                    Form &amp; Portal Ceiling
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
-                  Immigration portals, visa application services, tax authorities, and legal filing systems frequently enforce a strict 500KB cap per uploaded document. When documents contain scanned receipts or identity card photos, reaching 500KB requires minimizing image payload.
+                  Certain online services, visa submission systems, and document upload forms specify a 500KB limit per attachment. When documents contain scanned receipts or identity cards, reaching 500KB may require optimizing embedded image data.
                 </p>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  <strong>Practical method:</strong> If your PDF is an image scan that remains over 500KB after compression, extract the pages using our <Link href="/tools/pdf-to-jpg" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">PDF to JPG</Link> tool, downscale pixel dimensions or reduce quality with our <Link href="/tools/image-resizer" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Resizer</Link> or <Link href="/tools/image-compressor" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Compressor</Link>, then reassemble with <Link href="/tools/jpg-to-pdf" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">JPG to PDF</Link>.
+                  <strong>Practical method:</strong> If your destination requires a PDF under 500KB, compress the file and check the resulting size. If your PDF is an image scan that remains over 500KB after compression, extract the pages using our <Link href="/tools/pdf-to-jpg" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">PDF to JPG</Link> tool, downscale pixel dimensions or reduce quality with our <Link href="/tools/image-resizer" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Resizer</Link> or <Link href="/tools/image-compressor" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Image Compressor</Link>, then reassemble with <Link href="/tools/jpg-to-pdf" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">JPG to PDF</Link>.
                 </p>
               </div>
 
@@ -700,10 +700,10 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
-                  Public recruitment exams, civil service portals, and digital certificate systems sometimes mandate ultra-compact PDF files under 200KB or even 100KB for single-page documents.
+                  Some specialized portals, recruitment systems, or certificate archives mandate ultra-compact PDF files under 200KB. Always check the requirements of the specific portal before uploading.
                 </p>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                  <strong>Practical method:</strong> For 1- to 3-page text PDFs, Standard or Aggressive compression easily satisfies 200KB. For scanned certificates, ensure the scanning resolution was 150 DPI rather than 600 DPI, and convert color pages to grayscale if permissible.
+                  <strong>Practical method:</strong> If your destination requires a PDF under 200KB, compress the file and check the resulting size. For text-only PDFs, standard or aggressive stream compression can often help meet this target. For scanned documents that remain above 200KB, scanning at lower resolution (such as 150 DPI) or converting color pages to grayscale before assembly is typically necessary.
                 </p>
               </div>
 
@@ -721,7 +721,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                   </span>
                 </div>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
-                  Standard email providers (including Gmail, Outlook, and Yahoo) bounce attachments exceeding 20MB–25MB, while corporate firewalls may restrict files over 10MB. Shrinking PDFs prevents failed deliveries and ensures recipients can review files instantly on mobile devices.
+                  Email attachment limits vary by provider. Compressing a PDF can make it easier to send when the original file is too large. Reducing document size also prevents failed deliveries and ensures recipients can review files quickly on mobile devices.
                 </p>
                 <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                   <strong>Practical method:</strong> Run your file through Toolora's in-browser compressor to deflate internal streams before sending, saving bandwidth for both sender and recipient.
@@ -770,16 +770,16 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                 </h2>
                 <div className="space-y-3 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
                   <p>
-                    Because PDF files vary widely in construction, compression ratios differ significantly depending on the document type:
+                    Compression results vary significantly depending on the PDF's images, fonts, structure, and how well it was compressed originally. No tool can promise a specific percentage reduction without inspecting the document's internal assets.
                   </p>
                   <p>
-                    <strong>Text-heavy PDFs:</strong> Documents created in Word or Docs typically experience 15% to 40% reduction through dictionary cleaning and stream deflating, though their starting size is already relatively compact.
+                    <strong>Text-heavy PDFs:</strong> Documents generated from text editors or word processors may see reductions from dictionary cleaning and stream deflating, though their starting size is often already compact.
                   </p>
                   <p>
-                    <strong>Scanned &amp; image-heavy PDFs:</strong> If scanner software stored raw, uncompressed bitmaps (such as TIFF or uncompressed streams), savings can exceed 50% to 75%. However, if pages were already stored as compressed JPEGs, container repackaging saves 5% to 15% without re-sampling image pixels.
+                    <strong>Scanned &amp; image-heavy PDFs:</strong> If scanner software stored raw, uncompressed bitmaps or inefficient container streams, savings can be substantial. However, if pages were already stored as compressed images (like JPEGs), container repackaging alone will yield modest reduction without re-sampling image pixels.
                   </p>
                   <p>
-                    <strong>Already-optimized PDFs:</strong> If a document was previously compressed or exported using web presets in Adobe Acrobat, internal streams are already minimized. Toolora transparently provides diagnostic feedback when a document is already optimized.
+                    <strong>Already-optimized PDFs:</strong> If a document was previously compressed or exported using compact web presets, internal streams are already minimized. Toolora provides clear diagnostic feedback when a document is already well optimized.
                   </p>
                 </div>
               </div>
@@ -835,7 +835,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                   Email Attachment Limits
                 </h3>
                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Avoid rejected emails and 25MB delivery bounce-backs by shrinking document attachments before sending.
+                  Email attachment limits vary by provider. Compressing a PDF can make it easier to send when the original file is too large.
                 </p>
               </div>
 
@@ -845,10 +845,10 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                 }`}
               >
                 <h3 className="font-bold text-sm text-gray-900 dark:text-white mb-2">
-                  Portal &amp; ATS Compliance
+                  Portal &amp; Application Limits
                 </h3>
                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Satisfy strict 500KB, 1MB, or 2MB upload ceilings on job application portals, visa services, and tax forms.
+                  Some application, academic, government, and other online portals may impose their own file-size limits. Always check the requirements of the specific portal before uploading.
                 </p>
               </div>
 
@@ -861,7 +861,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                   Academic Submissions
                 </h3>
                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Upload term papers, theses, and scanned assignments smoothly into Canvas, Blackboard, or Google Classroom.
+                  Upload term papers, theses, and scanned assignments smoothly into educational course portals and review systems.
                 </p>
               </div>
 
@@ -874,7 +874,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                   Cloud &amp; Mobile Economy
                 </h3>
                 <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Conserve storage quotas on Google Drive or iCloud and allow clients to view files rapidly on cellular data.
+                  Conserve cloud storage space and allow recipients to view files quickly on mobile data connections.
                 </p>
               </div>
             </div>
@@ -984,7 +984,7 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                   Is PDF Compression Safe and Private?
                 </h2>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  100% In-Browser Execution — Zero Server Uploads
+                  In-Browser Processing — No Remote Server Uploads
                 </p>
               </div>
             </div>
@@ -993,10 +993,10 @@ export const ToolPage: React.FC<ToolPageProps> = ({ tool }) => {
                 Conventional PDF converter websites upload your files over public networks to remote web servers, where documents are queued, decompressed, and temporarily stored in cloud storage buckets. For confidential financial tax filings, legal agreements, medical charts, or corporate resumes, remote processing creates significant security and privacy concerns.
               </p>
               <p>
-                Toolora operates on a 100% client-side architecture: when you select a PDF, the binary document is parsed directly into an ArrayBuffer within your web browser's local memory using <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-indigo-500 text-xs font-mono">pdf-lib</code> and WebAssembly / JavaScript. Stream optimization, cross-reference table rebuilds, and metadata stripping execute strictly on your device's CPU.
+                Toolora operates on a client-side architecture: when you select a PDF, the binary document is parsed directly into memory within your web browser using <code className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-indigo-500 text-xs font-mono">pdf-lib</code>. Stream optimization, cross-reference table rebuilds, and metadata stripping execute locally on your device.
               </p>
               <p>
-                No document data is ever transmitted across the internet to Toolora's servers or any third-party cloud infrastructure. Because your files never leave your device, Toolora provides guaranteed security for confidential tax returns, NDA-protected business plans, and personal records.
+                PDF processing takes place in your browser, so the PDF file does not need to be uploaded to a remote compression server. This in-browser approach provides enhanced privacy for tax forms, business documents, and personal records.
               </p>
             </div>
           </section>

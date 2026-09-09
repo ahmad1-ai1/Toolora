@@ -198,16 +198,16 @@ export const TOOLS: ToolMetadata[] = [
     ],
     whyUseDetailed: [
       {
-        title: 'Complete In-Browser Privacy',
-        description: 'Tax filings, signed contracts, medical records, and resumes are processed entirely in your browser memory via pdf-lib. No document bytes are ever uploaded to remote web servers or external cloud storage.',
+        title: 'In-Browser Privacy',
+        description: 'PDF processing takes place in your browser, so the PDF file does not need to be uploaded to a remote compression server.',
       },
       {
         title: 'Preserved Text and Vector Sharpness',
         description: 'Unlike crude rasterizers that convert documents into blurry images, our stream optimization maintains crisp, selectable vector text, searchable characters, and precise typographical fonts.',
       },
       {
-        title: 'Instant Email & Portal Compliance',
-        description: 'Easily shrink bloated PDF documents to satisfy strict 1MB, 2MB, 5MB, or 10MB upload limits enforced by government portals, university submission systems, and corporate email servers.',
+        title: 'Helpful for Email & Portal Uploads',
+        description: 'Some application, academic, government, and other online portals may impose their own file-size limits. Always check the requirements of the specific portal before uploading, and compress your file to help meet attachment guidelines.',
       },
       {
         title: 'Completely Free with Zero Watermarks',
@@ -218,7 +218,7 @@ export const TOOLS: ToolMetadata[] = [
       'Client-side PDF stream optimization and dictionary stripping',
       'Reduces file size while preserving text clarity and vector graphics',
       'Real-time before-and-after size metrics and savings breakdown',
-      'No server uploads: safe for confidential legal, medical, and tax documents',
+      'In-browser processing: PDF files are processed locally without uploading to a remote compression server',
       'Instant processing with one-click direct download',
       'Supports single-page and multi-page PDF documents',
     ],
@@ -229,7 +229,7 @@ export const TOOLS: ToolMetadata[] = [
       'Download the smaller PDF: Click the "Download Compressed PDF" button to immediately save your optimized document directly to your device storage.',
     ],
     whyUse: [
-      'Guaranteed Privacy: Confidential legal agreements, medical records, and bank statements never leave your computer.',
+      'In-Browser Privacy: PDF processing takes place in your browser, so the PDF file does not need to be uploaded to a remote compression server.',
       'Instant Speed: Compresses documents immediately without server transmission lag or remote queue waits.',
       'No Quality Sacrifices: Maintains crisp, selectable text and clear layouts while eliminating bloated internal streams.',
     ],
@@ -240,23 +240,23 @@ export const TOOLS: ToolMetadata[] = [
       },
       {
         question: 'How can I reduce a PDF to 1MB?',
-        answer: 'To reduce a PDF to 1MB for email or web portals, upload your file and select Aggressive mode to eliminate extraneous metadata and compress internal streams. If the document originated from high-resolution photo scans and remains over 1MB, you may need to reduce the resolution of the scanned images using our Image Resizer or Image Compressor before combining them into a PDF.',
+        answer: 'If your destination requires a PDF under 1MB, compress the file and check the resulting size. Upload your file and select Aggressive mode to eliminate non-essential metadata and compress internal streams. If the document originated from high-resolution photo scans and is still above the required limit, additional document optimization or reducing image resolution with our Image Resizer or Image Compressor before creating the PDF may be necessary.',
       },
       {
         question: 'Can I compress a PDF to 500KB or 200KB?',
-        answer: 'Hitting strict thresholds like 500KB or 200KB depends heavily on the document structure. Text-only PDFs of 1 to 5 pages can often easily fit under 200KB or 500KB after stream compression. However, documents filled with multi-megabyte color scans cannot reach 200KB through lossless PDF stream compression alone without downsampling the underlying image pixels.',
+        answer: 'If your destination requires a PDF under 500KB or 200KB, compress the file and check the resulting size. Achieving these targets depends heavily on the original document structure. Text-focused PDFs with few pages can often be compressed below these limits. If the document contains high-resolution color scans or large images and is still above the required limit, additional document optimization or downscaling image resolution may be necessary.',
       },
       {
         question: 'Can I compress a PDF without losing quality?',
-        answer: 'Yes. Toolora uses lossless-style stream compression and object table optimization. This process deflates internal binary streams, reorganizes object trees, and removes redundant metadata without downsampling vector text, altering typography, or blurring lines. Text remains 100% sharp, vector, and searchable.',
+        answer: 'Yes. Toolora uses lossless-style stream compression and object table optimization. This process deflates internal binary streams, reorganizes object trees, and removes redundant metadata without downsampling vector text, altering typography, or blurring lines. Text remains vector and searchable.',
       },
       {
         question: 'Why is my PDF still large after compression?',
-        answer: 'If your PDF file size barely decreases, the file is likely already optimized by modern PDF creation software or consists primarily of pre-compressed JPEG photo scans. Because JPEG images are already compressed, repackaging the PDF container cannot squeeze out significant additional bytes without lossy image re-encoding.',
+        answer: 'Compression results vary significantly depending on the PDF\'s images, fonts, structure, and how well it was compressed originally. If your PDF file size barely decreases, the file is likely already optimized or consists primarily of pre-compressed JPEG photo scans. Because JPEG images are already compressed, repackaging the PDF container cannot squeeze out significant additional bytes without lossy image re-encoding.',
       },
       {
         question: 'Does compressing a PDF reduce text or print quality?',
-        answer: 'No. Our in-browser optimizer does not rasterize text or convert vector letters into bitmap pixels. All vector outlines, embedded fonts, and text formatting remain intact, ensuring identical sharpness on Retina screens and high-resolution printers.',
+        answer: 'No. Our in-browser optimizer does not rasterize text or convert vector letters into bitmap pixels. All vector outlines, embedded fonts, and text formatting remain intact, ensuring identical sharpness on high-resolution screens and printers.',
       },
       {
         question: 'Can I compress a scanned PDF?',
@@ -264,15 +264,15 @@ export const TOOLS: ToolMetadata[] = [
       },
       {
         question: 'Is there a file size limit for PDF compression?',
-        answer: 'Toolora allows uploading and compressing PDF files up to 80MB. Because processing runs entirely within your device browser memory without uploading across slow network connections, performance is quick and reliable for most multi-page documents.',
+        answer: 'Toolora allows uploading and compressing PDF files up to 80MB. Because processing runs within your device browser memory without uploading across slow network connections, performance is quick and reliable for most multi-page documents.',
       },
       {
         question: 'Are my PDF files uploaded to a server or stored?',
-        answer: 'No. Toolora operates on a 100% client-side architecture using pdf-lib and WebAssembly in your browser memory. Your documents, resumes, tax forms, and contracts never leave your device and are never sent to external servers or stored in cloud databases.',
+        answer: 'No. PDF processing takes place in your browser, so the PDF file does not need to be uploaded to a remote compression server or stored in an external database.',
       },
       {
         question: 'Does this PDF compressor work on mobile devices?',
-        answer: 'Yes. Toolora is fully responsive and executes client-side PDF compression directly inside mobile browsers such as Safari on iOS and Chrome on Android. You can select PDFs from your files app, compress them on your mobile phone, and download the optimized version immediately.',
+        answer: 'Yes. Toolora is fully responsive and executes in-browser PDF compression directly inside modern mobile browsers such as Safari on iOS and Chrome on Android. You can select PDFs from your files app, compress them on your mobile phone, and download the optimized version immediately.',
       },
     ],
     relatedToolSlugs: ['image-compressor', 'jpg-to-pdf', 'pdf-to-jpg', 'image-resizer', 'word-counter'],
